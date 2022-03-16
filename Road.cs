@@ -7,16 +7,22 @@ using System.Text;
 
 namespace VUPProjekt
 {
-    public class Road
+    public class Road : Ui
     {
         
         public List<Road> Roads = new List<Road>();
 
-        private Vector2 position;
         private bool isVisible;
 
         public bool IsVisible { get => isVisible; set => isVisible = value; }
         public Vector2 Position { get => position; set => position = value; }
+
+
+        public Road(Vector2 _pos) : base(_pos, "RectangleTexture")
+        {
+            //something with a rectangle
+        }
+
 
 
         private void DisplayRoad()
@@ -24,15 +30,6 @@ namespace VUPProjekt
 
         }
 
-        private void Draw(SpriteBatch spriteBatch)
-        {
-
-        }
-
-        private void LoadContent(ContentManager content)
-        {
-
-        }
 
     }
 }
