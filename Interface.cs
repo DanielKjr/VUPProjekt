@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using GraphLibrary;
+
 
 namespace VUPProjekt
 {
@@ -12,6 +12,61 @@ namespace VUPProjekt
     public class Interface
     {
         public List<string> Cities = new List<string>();
+        Graph<string> graph = new Graph<string>();
+
+        public void CreateNodes()
+        {
+            graph.AddNode("Skagen");
+            graph.AddNode("Frederikshavn");
+            graph.AddNode("Aalborg");
+            graph.AddNode("Holsterbro");
+            graph.AddNode("Viborg");
+            graph.AddNode("Randers");
+            graph.AddNode("Grenå");
+            graph.AddNode("Herning");
+            graph.AddNode("Århus");
+            graph.AddNode("Billund");
+            graph.AddNode("Vejle");
+            graph.AddNode("Esbjerg");
+            graph.AddNode("Kolding");
+            graph.AddNode("Odense");
+
+            graph.AddEdge("Skagen", "frederikshavn");
+            graph.AddEdge("Skagen", "Aalborg");
+
+            graph.AddEdge("Frederikshavn", "Aalborg");
+
+            graph.AddEdge("Aalborg", "Viborg");
+            graph.AddEdge("Aalborg", "Randers");
+
+            graph.AddEdge("Holsterbro", "Viborg");
+            graph.AddEdge("Holsterbro", "Herning");
+            graph.AddEdge("Holsterbro", "Esbjerg");
+
+            graph.AddEdge("Viborg", "Herning");
+            graph.AddEdge("Viborg", "Randers");
+
+            graph.AddEdge("Randers", "Grenå");
+            graph.AddEdge("Randers", "Århus");
+
+            graph.AddEdge("Grenå", "Århus");
+
+            graph.AddEdge("Herning", "Århus");
+            graph.AddEdge("Herning", "Billund");
+
+            graph.AddEdge("Århus", "Vejle");
+
+            graph.AddEdge("Billund", "Vejle");
+            graph.AddEdge("Billund", "Esbjerg");
+
+            graph.AddEdge("Vejle", "Kolding");
+
+            graph.AddEdge("Esbjerg", "Kolding");
+
+            graph.AddEdge("Kolding", "Odense");
+        }
+        
+        
 
         public event EventHandler ButtonClick;
 
@@ -115,7 +170,6 @@ namespace VUPProjekt
 
             return null;
         }
-
-
+      
     }
 }
