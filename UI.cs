@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Content;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -9,76 +10,36 @@ namespace VUPProjekt
 {
     
 
-    public class Interface
+    public abstract class Ui
     {
         public List<string> Cities = new List<string>();
-        Graph<string> graph = new Graph<string>();
+   
+        protected Vector2 position;
+        protected string spritePath;
+        protected Texture2D sprite;
 
-        public void CreateNodes()
+        public Ui(Vector2 _pos, string _spritePath)
         {
-            graph.AddNode("Skagen");
-            graph.AddNode("Frederikshavn");
-            graph.AddNode("Aalborg");
-            graph.AddNode("Holsterbro");
-            graph.AddNode("Viborg");
-            graph.AddNode("Randers");
-            graph.AddNode("Grenå");
-            graph.AddNode("Herning");
-            graph.AddNode("Århus");
-            graph.AddNode("Billund");
-            graph.AddNode("Vejle");
-            graph.AddNode("Esbjerg");
-            graph.AddNode("Kolding");
-            graph.AddNode("Odense");
-
-            graph.AddEdge("Skagen", "frederikshavn");
-            graph.AddEdge("Skagen", "Aalborg");
-
-            graph.AddEdge("Frederikshavn", "Aalborg");
-
-            graph.AddEdge("Aalborg", "Viborg");
-            graph.AddEdge("Aalborg", "Randers");
-
-            graph.AddEdge("Holsterbro", "Viborg");
-            graph.AddEdge("Holsterbro", "Herning");
-            graph.AddEdge("Holsterbro", "Esbjerg");
-
-            graph.AddEdge("Viborg", "Herning");
-            graph.AddEdge("Viborg", "Randers");
-
-            graph.AddEdge("Randers", "Grenå");
-            graph.AddEdge("Randers", "Århus");
-
-            graph.AddEdge("Grenå", "Århus");
-
-            graph.AddEdge("Herning", "Århus");
-            graph.AddEdge("Herning", "Billund");
-
-            graph.AddEdge("Århus", "Vejle");
-
-            graph.AddEdge("Billund", "Vejle");
-            graph.AddEdge("Billund", "Esbjerg");
-
-            graph.AddEdge("Vejle", "Kolding");
-
-            graph.AddEdge("Esbjerg", "Kolding");
-
-            graph.AddEdge("Kolding", "Odense");
+            position = _pos;
+            spritePath = _spritePath;
         }
+
+
+      
         
         
 
         public event EventHandler ButtonClick;
 
 
-        private void Draw(SpriteBatch spriteBatch)
+        public virtual void Draw(SpriteBatch spriteBatch)
         {
-
+            spriteBatch.Draw(sprite, position, Color.White );
         }
 
-        private void LoadContent(ContentManager content)
+        public void LoadContent(ContentManager content)
         {
-
+            sprite = content.Load<Texture2D>(spritePath);
         }
 
         protected virtual void OnButtonClick()
