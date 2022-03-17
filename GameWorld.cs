@@ -33,8 +33,30 @@ namespace VUPProjekt
             CreateNodes();
 
          
+            
+            
+
+            cities.Add(new City(new Vector2(600, 40), "Skagen"));
+            cities.Add(new City(new Vector2(590, 140), "Frederikshavn"));
+            cities.Add(new City(new Vector2(470, 275), "Aalborg"));
+            cities.Add(new City(new Vector2(235, 300), "Thisted"));
+            cities.Add(new City(new Vector2(225, 525), "Holstebro"));
+            cities.Add(new City(new Vector2(375, 500), "Viborg"));
             cities.Add(new City(new Vector2(500, 500), "Randers"));
-            cities.Add(new City(new Vector2(500, 600), "Aalborg"));
+            cities.Add(new City(new Vector2(660, 520), "Grenaa"));
+            cities.Add(new City(new Vector2(300, 600), "Herning"));
+            cities.Add(new City(new Vector2(500, 600), "Aarhus"));
+            cities.Add(new City(new Vector2(210, 750), "Oelgod"));
+            cities.Add(new City(new Vector2(400, 775), "Vejle"));
+            cities.Add(new City(new Vector2(175, 840), "Esbjerg"));
+            cities.Add(new City(new Vector2(390, 830), "Kolding"));
+            cities.Add(new City(new Vector2(575, 875), "Odense"));
+            cities.Add(new City(new Vector2(1000, 775), "Koebenhavn"));
+            cities.Add(new City(new Vector2(775, 875), "Slagelse"));
+            cities.Add(new City(new Vector2(850, 775), "Holbaek"));
+            cities.Add(new City(new Vector2(675, 770), "Kalundborg"));
+            cities.Add(new City(new Vector2(900, 900), "Haslev"));
+            
 
             base.Initialize();
         }
@@ -90,51 +112,62 @@ namespace VUPProjekt
             graph.AddNode("Skagen");
             graph.AddNode("Frederikshavn");
             graph.AddNode("Aalborg");
+            graph.AddNode("Thisted");
             graph.AddNode("Holsterbro");
             graph.AddNode("Viborg");
             graph.AddNode("Randers");
-            graph.AddNode("Grenå");
+            graph.AddNode("Grenaa");
             graph.AddNode("Herning");
-            graph.AddNode("Århus");
+            graph.AddNode("Aarhus");
             graph.AddNode("Billund");
             graph.AddNode("Vejle");
             graph.AddNode("Esbjerg");
             graph.AddNode("Kolding");
             graph.AddNode("Odense");
+            graph.AddNode("Koebenhavn");
+            graph.AddNode("Slagelse");
+            graph.AddNode("Holbaek");
+            graph.AddNode("Kalundborg");
+            graph.AddNode("Haslev");
+            
 
-            graph.AddEdge("Skagen", "Frederikshavn");
-            graph.AddEdge("Skagen", "Aalborg");
 
-            graph.AddEdge("Frederikshavn", "Aalborg");
 
-            graph.AddEdge("Aalborg", "Viborg");
+            graph.AddEdge("Skagen", "Fredikshavn");
+
+            graph.AddEdge("Fredikshavn", "Aalborg");
+
+            graph.AddEdge("Aalborg", "Thisted");
             graph.AddEdge("Aalborg", "Randers");
 
-            graph.AddEdge("Holsterbro", "Viborg");
-            graph.AddEdge("Holsterbro", "Herning");
-            graph.AddEdge("Holsterbro", "Esbjerg");
+            graph.AddEdge("Thisted", "Holstebro");
 
-            graph.AddEdge("Viborg", "Herning");
+            graph.AddEdge("Holstebro", "Viborg");
+
             graph.AddEdge("Viborg", "Randers");
+            graph.AddEdge("Viborg", "Herning");
 
-            graph.AddEdge("Randers", "Grenå");
-            graph.AddEdge("Randers", "Århus");
+            graph.AddEdge("Randers", "Grenaa");
+            graph.AddEdge("Randers", "Aarhus");
 
-            graph.AddEdge("Grenå", "Århus");
+            graph.AddEdge("Herning", "Oelgod");
 
-            graph.AddEdge("Herning", "Århus");
-            graph.AddEdge("Herning", "Billund");
+            graph.AddEdge("Oelgod", "Esbjerg");
 
-            graph.AddEdge("Århus", "Vejle");
+            graph.AddEdge("Aarhus", "Vejle");
 
-            graph.AddEdge("Billund", "Vejle");
-            graph.AddEdge("Billund", "Esbjerg");
-
-            graph.AddEdge("Vejle", "Kolding");
-
-            graph.AddEdge("Esbjerg", "Kolding");
-
+            graph.AddEdge("Kolding", "Esbjerg");
+            graph.AddEdge("Kolding", "Vejle");
             graph.AddEdge("Kolding", "Odense");
+
+            graph.AddEdge("Slagelse", "Odense");
+            graph.AddEdge("Slagelse", "Haslev");
+            graph.AddEdge("Slagelse", "Holbaek");
+
+            graph.AddEdge("Holbaek", "Koebenhavn");
+            graph.AddEdge("Holbaek", "Kalundborg");
+
+
         }
     }
 }
