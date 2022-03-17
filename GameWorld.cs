@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-
+using System.Collections.Generic;
 
 namespace VUPProjekt
 {
@@ -9,8 +9,11 @@ namespace VUPProjekt
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        private Texture2D danishMap;
+        public Graph<string> graph;
+        public List<City> cities = new List<City>();
 
-        Graph<string> graph = new Graph<string>();
+       
 
 
         public GameWorld()
@@ -22,9 +25,16 @@ namespace VUPProjekt
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+           
+            _graphics.PreferredBackBufferWidth = 1600;
+            _graphics.PreferredBackBufferHeight = 1050;
+            _graphics.ApplyChanges();
 
             CreateNodes();
+
+         
+            cities.Add(new City(new Vector2(500, 500), "Randers"));
+            cities.Add(new City(new Vector2(500, 600), "Aalborg"));
 
             base.Initialize();
         }
@@ -32,8 +42,15 @@ namespace VUPProjekt
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+            danishMap = Content.Load<Texture2D>("Danmarks Kort");
+           
 
-            // TODO: use this.Content to load your game content here
+            foreach (City c in cities)
+            {
+                c.LoadContent(Content);
+            }
+
+       
         }
 
         protected override void Update(GameTime gameTime)
@@ -41,8 +58,7 @@ namespace VUPProjekt
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
-
+       
             base.Update(gameTime);
         }
 
@@ -50,13 +66,27 @@ namespace VUPProjekt
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            _spriteBatch.Begin();
+
+
+            _spriteBatch.Draw(danishMap, new Vector2(0, 0), null, Color.White, 0f, Vector2.Zero, 0.5f, SpriteEffects.None, 0f);
+
+            foreach (City c in cities)
+            {
+                c.Draw(_spriteBatch);
+                
+            
+            }
+            
+
+            _spriteBatch.End();
 
             base.Draw(gameTime);
         }
 
         public void CreateNodes()
         {
+            graph = new Graph<string>();
             graph.AddNode("Skagen");
             graph.AddNode("Frederikshavn");
             graph.AddNode("Aalborg");
@@ -72,7 +102,7 @@ namespace VUPProjekt
             graph.AddNode("Kolding");
             graph.AddNode("Odense");
 
-            graph.AddEdge("Skagen", "frederikshavn");
+            graph.AddEdge("Skagen", "Frederikshavn");
             graph.AddEdge("Skagen", "Aalborg");
 
             graph.AddEdge("Frederikshavn", "Aalborg");

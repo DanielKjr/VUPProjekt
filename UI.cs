@@ -17,6 +17,7 @@ namespace VUPProjekt
         protected Vector2 position;
         protected string spritePath;
         protected Texture2D sprite;
+        public SpriteFont font;
 
         public Ui(Vector2 _pos, string _spritePath)
         {
@@ -27,19 +28,21 @@ namespace VUPProjekt
 
       
         
-        
+        public Vector2 Position { get => position; set => position = value; }
 
         public event EventHandler ButtonClick;
 
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(sprite, position, Color.White );
+            spriteBatch.Draw(sprite, position, null, Color.White, 0f, Vector2.Zero, 0.1f, SpriteEffects.None, 0f);
+
         }
 
         public void LoadContent(ContentManager content)
         {
             sprite = content.Load<Texture2D>(spritePath);
+            font = content.Load<SpriteFont>("FontPls");
         }
 
         protected virtual void OnButtonClick()

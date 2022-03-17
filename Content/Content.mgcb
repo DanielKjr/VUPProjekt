@@ -37,6 +37,13 @@
 /processorParam:TextureFormat=Color
 /build:Danmarks Kort.jpg
 
+#begin FontPls.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:FontPls.spritefont
+
 #begin RectangleTexture.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -48,4 +55,11 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:RectangleTexture.png
+
+#begin SpriteFont.spritefont
+/importer:FontDescriptionImporter
+/processor:LocalizedFontProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:SpriteFont.spritefont;Font.spritefont
 
