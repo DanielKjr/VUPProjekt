@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace VUPProjekt
 {
@@ -13,7 +14,11 @@ namespace VUPProjekt
         public Graph<string> graph;
         public List<City> cities = new List<City>();
 
-       
+        public List<Edge<string>> edging = new List<Edge<string>>();
+
+        public Dictionary<Edge<string>, Road> roads = new Dictionary<Edge<string>, Road>();
+
+
 
 
         public GameWorld()
@@ -25,16 +30,16 @@ namespace VUPProjekt
 
         protected override void Initialize()
         {
-           
+
             _graphics.PreferredBackBufferWidth = 1600;
             _graphics.PreferredBackBufferHeight = 1050;
             _graphics.ApplyChanges();
 
             CreateNodes();
 
-         
-            
-            
+
+
+
 
             cities.Add(new City(new Vector2(600, 40), "Skagen"));
             cities.Add(new City(new Vector2(590, 140), "Frederikshavn"));
@@ -56,7 +61,14 @@ namespace VUPProjekt
             cities.Add(new City(new Vector2(850, 775), "Holbaek"));
             cities.Add(new City(new Vector2(675, 770), "Kalundborg"));
             cities.Add(new City(new Vector2(900, 900), "Haslev"));
+
+            Node<string> n = DFS<string>(graph.NodeSet.Find(x => x.Data == "Skagen"), graph.NodeSet.Find(x => x.Data == "Koebenhavn"));
+
             
+
+            List<Node<string>> path = TrackPath<string>(n, graph.NodeSet.Find(x => x.Data == "Skagen"));
+
+           
 
             base.Initialize();
         }
@@ -65,14 +77,14 @@ namespace VUPProjekt
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             danishMap = Content.Load<Texture2D>("Danmarks Kort");
-           
+
 
             foreach (City c in cities)
             {
                 c.LoadContent(Content);
             }
 
-       
+
         }
 
         protected override void Update(GameTime gameTime)
@@ -80,7 +92,7 @@ namespace VUPProjekt
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-       
+
             base.Update(gameTime);
         }
 
@@ -96,10 +108,10 @@ namespace VUPProjekt
             foreach (City c in cities)
             {
                 c.Draw(_spriteBatch);
-                
-            
+
+
             }
-            
+
 
             _spriteBatch.End();
 
@@ -130,7 +142,7 @@ namespace VUPProjekt
             graph.AddNode("Holbaek");
             graph.AddNode("Kalundborg");
             graph.AddNode("Haslev");
-            
+
 
 
 
@@ -169,6 +181,102 @@ namespace VUPProjekt
             graph.AddEdge("Holbaek", "Kalundborg");
 
 
+            foreach (Node<string> item in graph.NodeSet)
+            {
+                foreach (Edge<string> e in item.Edges)
+                {
+                    edging.Add(e);
+                    roads.Add(e, new Road(new Vector2(500, 500)));
+                }
+            }
+
+
+
+        }
+
+
+        private static List<Node<T>> TrackPath<T>(Node<T> node, Node<T> start)
+        {
+            List<Node<T>> path = new List<Node<T>>();
+
+            while (!node.Equals(start))
+            {
+                path.Add(node);
+                node = node.Parent;
+            }
+            path.Add(start);
+
+            path.Reverse();
+
+
+            return path;
+        }
+
+
+        private static Node<T> DFS<T>(Node<T> start, Node<T> goal)
+        {
+            Stack<Edge<T>> edges = new Stack<Edge<T>>();
+            edges.Push(new Edge<T>(start, start));
+
+            while (edges.Count > 0)
+            {
+                Edge<T> edge = edges.Pop();
+
+                if (!edge.To.Discovered)
+                {
+                    edge.To.Discovered = true;
+                    edge.To.Parent = edge.From;
+
+                }
+                if (edge.To == goal)
+                {
+                    return edge.To;
+                }
+
+                foreach (Edge<T> e in edge.To.Edges)
+                {
+                    if (!e.To.Discovered)
+                    {
+                        edges.Push(e);
+                    }
+                }
+
+            }
+
+            return null;
+        }
+
+
+
+        private static Node<T> BFS<T>(Node<T> start, Node<T> goal)
+        {
+            Queue<Edge<T>> edges = new Queue<Edge<T>>();
+            edges.Enqueue(new Edge<T>(start, start));
+
+            while (edges.Count > 0)
+            {
+                Edge<T> edge = edges.Dequeue();
+
+                if (!edge.To.Discovered)
+                {
+                    edge.To.Discovered = true;
+                    edge.To.Parent = edge.From;
+                }
+                if (edge.To == goal)
+                {
+                    return edge.To;
+                }
+
+                foreach (Edge<T> e in edge.To.Edges)
+                {
+                    if (!e.To.Discovered)
+                    {
+                        edges.Enqueue(e);
+                    }
+                }
+            }
+
+            return null;
         }
     }
 }
