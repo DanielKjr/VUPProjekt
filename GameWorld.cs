@@ -40,7 +40,7 @@ namespace VUPProjekt
             cities.Add(new City(new Vector2(590, 140), "Frederikshavn"));
             cities.Add(new City(new Vector2(470, 275), "Aalborg"));
             cities.Add(new City(new Vector2(235, 300), "Thisted"));
-            cities.Add(new City(new Vector2(225, 525), "Holstebro"));
+            cities.Add(new City(new Vector2(225, 525), "Holsterbro"));
             cities.Add(new City(new Vector2(375, 500), "Viborg"));
             cities.Add(new City(new Vector2(500, 500), "Randers"));
             cities.Add(new City(new Vector2(660, 520), "Grenaa"));
@@ -119,7 +119,8 @@ namespace VUPProjekt
             graph.AddNode("Grenaa");
             graph.AddNode("Herning");
             graph.AddNode("Aarhus");
-            graph.AddNode("Billund");
+            graph.AddNode("Oelgod");
+            graph.AddNode("Thisted");
             graph.AddNode("Vejle");
             graph.AddNode("Esbjerg");
             graph.AddNode("Kolding");
@@ -133,16 +134,16 @@ namespace VUPProjekt
 
 
 
-            graph.AddEdge("Skagen", "Fredikshavn");
+            graph.AddEdge("Skagen", "Frederikshavn");
 
-            graph.AddEdge("Fredikshavn", "Aalborg");
+            graph.AddEdge("Frederikshavn", "Aalborg");
 
             graph.AddEdge("Aalborg", "Thisted");
             graph.AddEdge("Aalborg", "Randers");
 
-            graph.AddEdge("Thisted", "Holstebro");
+            graph.AddEdge("Thisted", "Holsterbro");
 
-            graph.AddEdge("Holstebro", "Viborg");
+            graph.AddEdge("Holsterbro", "Viborg");
 
             graph.AddEdge("Viborg", "Randers");
             graph.AddEdge("Viborg", "Herning");
