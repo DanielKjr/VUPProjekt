@@ -9,18 +9,18 @@ namespace VUPProjekt
     public class City : Ui
     {
         protected string byNavn;
-        private string edgeOne;
-        private string edgeTwo;
-        private string edgeThree;
+        protected string edgeOne;
+        protected string edgeTwo;
+        protected string edgeThree;
+
+
         public static Graph<string> graph = new Graph<string>();
 
         #region OVERLOADS
         public City(Vector2 _pos, string _byNavn) : base(_pos, "byskilt")
         {
             byNavn = _byNavn;
-
             graph.AddNode(byNavn);
-
 
         }
 
@@ -29,7 +29,6 @@ namespace VUPProjekt
             byNavn = _byNavn;
             edgeOne = _edgeOne;
             graph.AddNode(byNavn);
-            //graph.AddEdge(byNavn, edgeOne);
 
 
         }
@@ -40,9 +39,6 @@ namespace VUPProjekt
             edgeOne= _edgeOne;
             edgeTwo= _edgeTwo;
             graph.AddNode(byNavn);
-            //graph.AddEdge(byNavn, edgeOne);
-            //graph.AddEdge(byNavn, edgeTwo);
-
 
         }
 
@@ -55,14 +51,12 @@ namespace VUPProjekt
             edgeThree= _edgeThree;
 
             graph.AddNode(byNavn);
-            //graph.AddEdge(byNavn, edgeOne);
-            //graph.AddEdge(byNavn, edgeTwo);
-            //graph.AddEdge(byNavn, edgeThree);
-
 
         }
 
         #endregion
+
+
 
 
         public void CreateEdges()

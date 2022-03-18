@@ -11,16 +11,14 @@ namespace VUPProjekt
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private Texture2D danishMap;
-        private  Graph<string> graph = new Graph<string>();
-
-
         public List<City> cities = new List<City>();
 
-        public List<Edge<string>> edging = new List<Edge<string>>();
 
-        public Dictionary<Edge<string>, Road> roads = new Dictionary<Edge<string>, Road>();
+        //bruges ikke men keep just in case cus we're hoarders
+        private List<Edge<string>> edging = new List<Edge<string>>();
+        private Dictionary<Edge<string>, Road> roads = new Dictionary<Edge<string>, Road>();
+        private Graph<string> graph = new Graph<string>();
 
-     
 
         public GameWorld()
         {
@@ -43,7 +41,6 @@ namespace VUPProjekt
 
             cities.Add(new City(new Vector2(590, 140), "Frederikshavn", "Aalborg"));
             cities.Add(new City(new Vector2(600, 40), "Skagen", "Frederikshavn"));
-           
             cities.Add(new City(new Vector2(470, 275), "Aalborg", "Thisted", "Randers"));
             cities.Add(new City(new Vector2(235, 300), "Thisted", "Holsterbro"));
             cities.Add(new City(new Vector2(225, 525), "Holsterbro", "Viborg"));
@@ -63,15 +60,14 @@ namespace VUPProjekt
             cities.Add(new City(new Vector2(675, 770), "Kalundborg"));
             cities.Add(new City(new Vector2(900, 900), "Haslev"));
 
-            if (cities.Count == 20)
+
+            foreach (City item in cities)
             {
-                foreach (City item in cities)
-                {
-                    item.CreateEdges();
-                }
+                item.CreateEdges();
             }
 
-            
+
+
 
 
 
@@ -80,7 +76,7 @@ namespace VUPProjekt
             base.Initialize();
         }
 
-       
+
 
         protected override void LoadContent()
         {
@@ -129,7 +125,7 @@ namespace VUPProjekt
 
         public void CreateNodes()
         {
-            
+
             //graph.AddNode("Skagen");
             //graph.AddNode("Frederikshavn");
             //graph.AddNode("Aalborg");
@@ -204,6 +200,6 @@ namespace VUPProjekt
         }
 
 
-       
+
     }
 }
