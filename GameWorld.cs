@@ -11,15 +11,16 @@ namespace VUPProjekt
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private Texture2D danishMap;
-        public Graph<string> graph;
+        private  Graph<string> graph = new Graph<string>();
+
+
         public List<City> cities = new List<City>();
 
         public List<Edge<string>> edging = new List<Edge<string>>();
 
         public Dictionary<Edge<string>, Road> roads = new Dictionary<Edge<string>, Road>();
 
-
-
+     
 
         public GameWorld()
         {
@@ -35,43 +36,48 @@ namespace VUPProjekt
             _graphics.PreferredBackBufferHeight = 1050;
             _graphics.ApplyChanges();
 
-            CreateNodes();
+            //  CreateNodes();
 
 
 
 
-
-            cities.Add(new City(new Vector2(600, 40), "Skagen"));
-            cities.Add(new City(new Vector2(590, 140), "Frederikshavn"));
-            cities.Add(new City(new Vector2(470, 275), "Aalborg"));
-            cities.Add(new City(new Vector2(235, 300), "Thisted"));
-            cities.Add(new City(new Vector2(225, 525), "Holsterbro"));
-            cities.Add(new City(new Vector2(375, 500), "Viborg"));
-            cities.Add(new City(new Vector2(500, 500), "Randers"));
-            cities.Add(new City(new Vector2(660, 520), "Grenaa"));
-            cities.Add(new City(new Vector2(300, 600), "Herning"));
-            cities.Add(new City(new Vector2(500, 600), "Aarhus"));
-            cities.Add(new City(new Vector2(210, 750), "Oelgod"));
-            cities.Add(new City(new Vector2(400, 775), "Vejle"));
-            cities.Add(new City(new Vector2(175, 840), "Esbjerg"));
-            cities.Add(new City(new Vector2(390, 830), "Kolding"));
-            cities.Add(new City(new Vector2(575, 875), "Odense"));
+            cities.Add(new City(new Vector2(590, 140), "Frederikshavn", "Aalborg"));
+            cities.Add(new City(new Vector2(600, 40), "Skagen", "Frederikshavn"));
+           
+            cities.Add(new City(new Vector2(470, 275), "Aalborg", "Thisted", "Randers"));
+            cities.Add(new City(new Vector2(235, 300), "Thisted", "Holsterbro"));
+            cities.Add(new City(new Vector2(225, 525), "Holsterbro", "Viborg"));
+            cities.Add(new City(new Vector2(375, 500), "Viborg", "Randers", "Herning"));
+            cities.Add(new City(new Vector2(500, 500), "Randers", "Grenaa", "Aarhus", "Viborg"));
+            cities.Add(new City(new Vector2(660, 520), "Grenaa", "Aarhus"));
+            cities.Add(new City(new Vector2(300, 600), "Herning", "Oelgod"));
+            cities.Add(new City(new Vector2(500, 600), "Aarhus", "Vejle"));
+            cities.Add(new City(new Vector2(210, 750), "Oelgod", "Esbjerg"));
+            cities.Add(new City(new Vector2(400, 775), "Vejle", "Kolding"));
+            cities.Add(new City(new Vector2(175, 840), "Esbjerg", "Kolding"));
+            cities.Add(new City(new Vector2(390, 830), "Kolding", "Esbjerg", "Vejle", "Odense"));
+            cities.Add(new City(new Vector2(575, 875), "Odense", "Slagelse"));
             cities.Add(new City(new Vector2(1000, 775), "Koebenhavn"));
-            cities.Add(new City(new Vector2(775, 875), "Slagelse"));
-            cities.Add(new City(new Vector2(850, 775), "Holbaek"));
+            cities.Add(new City(new Vector2(775, 875), "Slagelse", "Odense", "Haslev", "Holbaek"));
+            cities.Add(new City(new Vector2(850, 775), "Holbaek", "Koebenhavn", "Kalundborg"));
             cities.Add(new City(new Vector2(675, 770), "Kalundborg"));
             cities.Add(new City(new Vector2(900, 900), "Haslev"));
 
-            Node<string> n = DFS<string>(graph.NodeSet.Find(x => x.Data == "Skagen"), graph.NodeSet.Find(x => x.Data == "Koebenhavn"));
 
-            
 
-            List<Node<string>> path = TrackPath<string>(n, graph.NodeSet.Find(x => x.Data == "Skagen"));
+            foreach (City item in cities)
+            {
+                item.CreateEdges();
+            }
 
-           
+
+
+
 
             base.Initialize();
         }
+
+       
 
         protected override void LoadContent()
         {
@@ -120,28 +126,28 @@ namespace VUPProjekt
 
         public void CreateNodes()
         {
-            graph = new Graph<string>();
-            graph.AddNode("Skagen");
-            graph.AddNode("Frederikshavn");
-            graph.AddNode("Aalborg");
-            graph.AddNode("Thisted");
-            graph.AddNode("Holsterbro");
-            graph.AddNode("Viborg");
-            graph.AddNode("Randers");
-            graph.AddNode("Grenaa");
-            graph.AddNode("Herning");
-            graph.AddNode("Aarhus");
-            graph.AddNode("Oelgod");
-            graph.AddNode("Thisted");
-            graph.AddNode("Vejle");
-            graph.AddNode("Esbjerg");
-            graph.AddNode("Kolding");
-            graph.AddNode("Odense");
-            graph.AddNode("Koebenhavn");
-            graph.AddNode("Slagelse");
-            graph.AddNode("Holbaek");
-            graph.AddNode("Kalundborg");
-            graph.AddNode("Haslev");
+            
+            //graph.AddNode("Skagen");
+            //graph.AddNode("Frederikshavn");
+            //graph.AddNode("Aalborg");
+            //graph.AddNode("Thisted");
+            //graph.AddNode("Holsterbro");
+            //graph.AddNode("Viborg");
+            //graph.AddNode("Randers");
+            //graph.AddNode("Grenaa");
+            //graph.AddNode("Herning");
+            //graph.AddNode("Aarhus");
+            //graph.AddNode("Oelgod");
+            //graph.AddNode("Thisted");
+            //graph.AddNode("Vejle");
+            //graph.AddNode("Esbjerg");
+            //graph.AddNode("Kolding");
+            //graph.AddNode("Odense");
+            //graph.AddNode("Koebenhavn");
+            //graph.AddNode("Slagelse");
+            //graph.AddNode("Holbaek");
+            //graph.AddNode("Kalundborg");
+            //graph.AddNode("Haslev");
 
 
 
@@ -195,88 +201,6 @@ namespace VUPProjekt
         }
 
 
-        private static List<Node<T>> TrackPath<T>(Node<T> node, Node<T> start)
-        {
-            List<Node<T>> path = new List<Node<T>>();
-
-            while (!node.Equals(start))
-            {
-                path.Add(node);
-                node = node.Parent;
-            }
-            path.Add(start);
-
-            path.Reverse();
-
-
-            return path;
-        }
-
-
-        private static Node<T> DFS<T>(Node<T> start, Node<T> goal)
-        {
-            Stack<Edge<T>> edges = new Stack<Edge<T>>();
-            edges.Push(new Edge<T>(start, start));
-
-            while (edges.Count > 0)
-            {
-                Edge<T> edge = edges.Pop();
-
-                if (!edge.To.Discovered)
-                {
-                    edge.To.Discovered = true;
-                    edge.To.Parent = edge.From;
-
-                }
-                if (edge.To == goal)
-                {
-                    return edge.To;
-                }
-
-                foreach (Edge<T> e in edge.To.Edges)
-                {
-                    if (!e.To.Discovered)
-                    {
-                        edges.Push(e);
-                    }
-                }
-
-            }
-
-            return null;
-        }
-
-
-
-        private static Node<T> BFS<T>(Node<T> start, Node<T> goal)
-        {
-            Queue<Edge<T>> edges = new Queue<Edge<T>>();
-            edges.Enqueue(new Edge<T>(start, start));
-
-            while (edges.Count > 0)
-            {
-                Edge<T> edge = edges.Dequeue();
-
-                if (!edge.To.Discovered)
-                {
-                    edge.To.Discovered = true;
-                    edge.To.Parent = edge.From;
-                }
-                if (edge.To == goal)
-                {
-                    return edge.To;
-                }
-
-                foreach (Edge<T> e in edge.To.Edges)
-                {
-                    if (!e.To.Discovered)
-                    {
-                        edges.Enqueue(e);
-                    }
-                }
-            }
-
-            return null;
-        }
+       
     }
 }
