@@ -63,12 +63,15 @@ namespace VUPProjekt
             cities.Add(new City(new Vector2(675, 770), "Kalundborg"));
             cities.Add(new City(new Vector2(900, 900), "Haslev"));
 
-
-
-            foreach (City item in cities)
+            if (cities.Count == 20)
             {
-                item.CreateEdges();
+                foreach (City item in cities)
+                {
+                    item.CreateEdges();
+                }
             }
+
+            
 
 
 

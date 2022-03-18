@@ -12,7 +12,7 @@ namespace VUPProjekt
         private string edgeOne;
         private string edgeTwo;
         private string edgeThree;
-        public Graph<string> graph = new Graph<string>();
+        public static Graph<string> graph = new Graph<string>();
 
         #region OVERLOADS
         public City(Vector2 _pos, string _byNavn) : base(_pos, "byskilt")
