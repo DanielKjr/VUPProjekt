@@ -32,6 +32,10 @@ namespace VUPProjekt
 
         public event EventHandler ButtonClick;
 
+        public virtual void Update(GameTime gameTime)
+        {
+
+        }
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
