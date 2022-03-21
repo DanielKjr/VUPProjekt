@@ -17,6 +17,7 @@ namespace VUPProjekt
         protected Vector2 position;
         protected string spritePath;
         protected Texture2D sprite;
+        protected Texture2D rectangleSprite;
         public SpriteFont font;
 
         public Ui(Vector2 _pos, string _spritePath)
@@ -47,6 +48,7 @@ namespace VUPProjekt
         {
             sprite = content.Load<Texture2D>(spritePath);
             font = content.Load<SpriteFont>("FontPls");
+            rectangleSprite = content.Load<Texture2D>("RectangleTexture");
         }
 
         protected virtual void OnButtonClick()

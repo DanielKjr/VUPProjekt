@@ -13,13 +13,21 @@ namespace VUPProjekt
         protected string edgeTwo;
         protected string edgeThree;
 
+        public static bool hasRun = false;
+        public Node<string> cityNode;
+
+        public static List<Vector2> drawPath = new List<Vector2>();
+        public static List<City> drawCity = new List<City>();
 
         public static Graph<string> graph = new Graph<string>();
+
+        public static List<Rectangle> roads = new List<Rectangle>();
 
         #region OVERLOADS
         public City(Vector2 _pos, string _byNavn) : base(_pos, "byskilt")
         {
             byNavn = _byNavn;
+            cityNode = new Node<string>(byNavn);
             graph.AddNode(byNavn);
 
         }
@@ -28,6 +36,8 @@ namespace VUPProjekt
         {
             byNavn = _byNavn;
             edgeOne = _edgeOne;
+            
+            cityNode = new Node<string>(byNavn);
             graph.AddNode(byNavn);
 
 
@@ -38,6 +48,7 @@ namespace VUPProjekt
             byNavn = _byNavn;
             edgeOne= _edgeOne;
             edgeTwo= _edgeTwo;
+            cityNode = new Node<string>(byNavn);
             graph.AddNode(byNavn);
 
         }
@@ -49,15 +60,56 @@ namespace VUPProjekt
             edgeOne=_edgeOne;
             edgeTwo = _edgeTwo;
             edgeThree= _edgeThree;
-
+            cityNode = new Node<string>(byNavn);
             graph.AddNode(byNavn);
 
         }
 
         #endregion
 
+        public void FindRoad()
+        {
+            if (!hasRun)
+            {
+                Node<string> n = DFS<string>(graph.NodeSet.Find(x => x.Data == "Skagen"), graph.NodeSet.Find(x => x.Data == "Esbjerg"));
+               // Node<string> n = BFS<string>(graph.NodeSet.Find(x => x.Data == "Skagen"), graph.NodeSet.Find(x => x.Data == "Esbjerg"));
+
+                List<Node<string>> path = TrackPath<string>(n, graph.NodeSet.Find(x => x.Data == "Skagen"));
+
+                for (int i = 0; i < path.Count; i++)
+                {
+
+                    drawCity.Add(GameWorld.cities.Find(x => x.cityNode.Data == path[i].Data));
+
+                  
+                }
+
+                for (int i = 1; i < drawCity.Count; i++)
+                {
+
+                    for (int b = 0; b < drawCity.Count; b++)
+                    {
+                        if (i <= drawCity.Count - 1 && b <= drawCity.Count -1)
+                            DrawRoad(drawCity[b], drawCity[i]);
+
+                    }
 
 
+
+                }
+
+                hasRun = true;
+            }
+           
+        }
+
+        public void DrawRoad(City start, City target)
+        {
+            //roads.Add(new Rectangle((int)start.position.X + 50, (int)start.position.Y+20, 10, (int)Vector2.Distance(start.position, target.position)));
+            //roads.Add(new Rectangle((int)start.position.X + 50, (int)target.position.Y + 20, 10, ((int)start.position.Y - (int)target.position.Y)));
+
+            roads.Add(new Rectangle((int)start.position.X, (int)start.position.Y, 10, 50));
+        }
 
         public void CreateEdges()
         {
@@ -85,14 +137,20 @@ namespace VUPProjekt
         {
             spriteBatch.Draw(sprite, position, null, Color.White, 0f, Vector2.Zero, 0.1f, SpriteEffects.None, 0f);
             spriteBatch.DrawString(font, byNavn, new Vector2(position.X + 10, position.Y + 5), Color.Black);
+
+            if (roads != null)
+            {
+                foreach (var road in roads)
+                    spriteBatch.Draw(rectangleSprite, road, Color.Red);
+            }
+           
         }
 
         public override void Update(GameTime gameTime)
         {
 
-            //Node<string> n = DFS<string>(graph.NodeSet.Find(x => x.Data == "Skagen"), graph.NodeSet.Find(x => x.Data == "Koebenhavn"));
+          
 
-            //List<Node<string>> path = TrackPath<string>(n, graph.NodeSet.Find(x => x.Data == "Skagen"));
 
         }
 
