@@ -11,7 +11,10 @@ namespace VUPProjekt
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private Texture2D danishMap;
-        public List<City> cities = new List<City>();
+        
+
+        public static List<City> cities = new List<City>();
+
 
 
         //bruges ikke men keep just in case cus we're hoarders
@@ -34,7 +37,6 @@ namespace VUPProjekt
             _graphics.PreferredBackBufferHeight = 1050;
             _graphics.ApplyChanges();
 
-            //  CreateNodes();
 
 
 
@@ -66,7 +68,14 @@ namespace VUPProjekt
                 item.CreateEdges();
             }
 
+            foreach (City c in cities)
+            {
+                //static bool gør den kun køres 1 gang, skal have den heg for at kunne tilgå en instans af city og bruge method
+                c.FindRoad();
+            }
+            
 
+           
 
 
 
