@@ -106,7 +106,6 @@ namespace VUPProjekt
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-
             base.Update(gameTime);
         }
 
@@ -117,7 +116,7 @@ namespace VUPProjekt
             _spriteBatch.Begin();
 
 
-            _spriteBatch.Draw(danishMap, new Vector2(0, 0), null, Color.White, 0f, Vector2.Zero, 0.5f, SpriteEffects.None, 0f);
+            _spriteBatch.Draw(danishMap, new Vector2(0, 0), null, Color.White, 0f, Vector2.Zero, 0.5f, SpriteEffects.None, 0);
 
             foreach (City c in cities)
             {
@@ -125,7 +124,7 @@ namespace VUPProjekt
 
 
             }
-
+            City.hasRunRoad = false;
 
             _spriteBatch.End();
 
