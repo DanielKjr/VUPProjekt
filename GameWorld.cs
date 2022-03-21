@@ -108,7 +108,10 @@ namespace VUPProjekt
         }
         private void DFSButtonClick(object sender, EventArgs e)
         {
-            Exit();
+            foreach (City c in cities)
+            {
+                //if distance between mouse and city is < the current lowest distance.  taget city = current city
+            }
         }
 
         protected override void Update(GameTime gameTime)
