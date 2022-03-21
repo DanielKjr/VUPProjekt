@@ -84,17 +84,21 @@ namespace VUPProjekt
                   
                 }
 
-                for (int i = 1; i < drawCity.Count; i++)
+                for (int i = 0; i < drawCity.Count; i++)
                 {
 
-                    for (int b = 0; b < drawCity.Count; b++)
+                    /*for (int b = 0; b < drawCity.Count; b++)
                     {
-                        if (i <= drawCity.Count - 1 && b <= drawCity.Count -1)
+                        if (i <= drawCity.Count - 1 && b <= drawCity.Count - 1)
+                        {
                             DrawRoad(drawCity[b], drawCity[i]);
+                        }
 
+                    }*/
+                    if (i < drawCity.Count - 1)
+                    {
+                        DrawRoad(drawCity[i], drawCity[i + 1]);
                     }
-
-
 
                 }
 
@@ -108,7 +112,7 @@ namespace VUPProjekt
             //roads.Add(new Rectangle((int)start.position.X + 50, (int)start.position.Y+20, 10, (int)Vector2.Distance(start.position, target.position)));
             //roads.Add(new Rectangle((int)start.position.X + 50, (int)target.position.Y + 20, 10, ((int)start.position.Y - (int)target.position.Y)));
 
-            roads.Add(new Rectangle((int)start.position.X, (int)start.position.Y, 10, 50));
+            roads.Add(new Rectangle((int)start.position.X, (int)start.position.Y, 10, (int)Vector2.Distance(start.position,target.position)));
         }
 
         public void CreateEdges()
@@ -141,7 +145,10 @@ namespace VUPProjekt
             if (roads != null)
             {
                 foreach (var road in roads)
+                {
                     spriteBatch.Draw(rectangleSprite, road, Color.Red);
+                    spriteBatch.Draw(rectangleSprite, road, Color.Red);
+                }
             }
            
         }
