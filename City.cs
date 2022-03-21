@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Windows;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -106,15 +107,17 @@ namespace VUPProjekt
             }
            
         }
-
+        static float temp;
         public void DrawRoad(City start, City target)
         {
             //roads.Add(new Rectangle((int)start.position.X + 50, (int)start.position.Y+20, 10, (int)Vector2.Distance(start.position, target.position)));
             //roads.Add(new Rectangle((int)start.position.X + 50, (int)target.position.Y + 20, 10, ((int)start.position.Y - (int)target.position.Y)));
 
             roads.Add(new Rectangle((int)start.position.X, (int)start.position.Y, 10, (int)Vector2.Distance(start.position,target.position)));
+            temp = (float)Math.Atan2(start.position.X - target.position.X, target.position.Y - start.position.Y);
         }
 
+        
         public void CreateEdges()
         {
             if (edgeOne != null && edgeTwo != null && edgeThree != null)
@@ -146,9 +149,10 @@ namespace VUPProjekt
             {
                 foreach (var road in roads)
                 {
-                    spriteBatch.Draw(rectangleSprite, road, Color.Red);
-                    spriteBatch.Draw(rectangleSprite, road, Color.Red);
+                    //spriteBatch.Draw(rectangleSprite, road, Color.Red);
+                    spriteBatch.Draw(rectangleSprite, new Vector2(road.X, road.Y), road, Color.Red, temp, Vector2.Zero, 1f, SpriteEffects.None, 0);
                 }
+                
             }
            
         }

@@ -17,6 +17,8 @@ namespace VUPProjekt
         public bool IsVisible { get => isVisible; set => isVisible = value; }
         public Vector2 Position { get => position; set => position = value; }
 
+        public float Rotation { get => Rotation; set => Rotation = value; }
+
 
         public Road(Vector2 _pos) : base(_pos, "RectangleTexture")
         {
