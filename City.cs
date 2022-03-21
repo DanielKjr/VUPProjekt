@@ -14,6 +14,8 @@ namespace VUPProjekt
         protected string edgeTwo;
         protected string edgeThree;
 
+        private static List<float> angles = new List<float>();
+
         public static bool hasRun = false;
         public Node<string> cityNode;
 
@@ -37,7 +39,7 @@ namespace VUPProjekt
         {
             byNavn = _byNavn;
             edgeOne = _edgeOne;
-            
+
             cityNode = new Node<string>(byNavn);
             graph.AddNode(byNavn);
 
@@ -47,8 +49,8 @@ namespace VUPProjekt
         public City(Vector2 _pos, string _byNavn, string _edgeOne, string _edgeTwo) : base(_pos, "byskilt")
         {
             byNavn = _byNavn;
-            edgeOne= _edgeOne;
-            edgeTwo= _edgeTwo;
+            edgeOne = _edgeOne;
+            edgeTwo = _edgeTwo;
             cityNode = new Node<string>(byNavn);
             graph.AddNode(byNavn);
 
@@ -58,9 +60,9 @@ namespace VUPProjekt
         public City(Vector2 _pos, string _byNavn, string _edgeOne, string _edgeTwo, string _edgeThree) : base(_pos, "byskilt")
         {
             byNavn = _byNavn;
-            edgeOne=_edgeOne;
+            edgeOne = _edgeOne;
             edgeTwo = _edgeTwo;
-            edgeThree= _edgeThree;
+            edgeThree = _edgeThree;
             cityNode = new Node<string>(byNavn);
             graph.AddNode(byNavn);
 
@@ -73,7 +75,7 @@ namespace VUPProjekt
             if (!hasRun)
             {
                 Node<string> n = DFS<string>(graph.NodeSet.Find(x => x.Data == "Skagen"), graph.NodeSet.Find(x => x.Data == "Esbjerg"));
-               // Node<string> n = BFS<string>(graph.NodeSet.Find(x => x.Data == "Skagen"), graph.NodeSet.Find(x => x.Data == "Esbjerg"));
+                // Node<string> n = BFS<string>(graph.NodeSet.Find(x => x.Data == "Skagen"), graph.NodeSet.Find(x => x.Data == "Esbjerg"));
 
                 List<Node<string>> path = TrackPath<string>(n, graph.NodeSet.Find(x => x.Data == "Skagen"));
 
@@ -82,7 +84,7 @@ namespace VUPProjekt
 
                     drawCity.Add(GameWorld.cities.Find(x => x.cityNode.Data == path[i].Data));
 
-                  
+
                 }
 
                 for (int i = 0; i < drawCity.Count; i++)
@@ -105,7 +107,7 @@ namespace VUPProjekt
 
                 hasRun = true;
             }
-           
+
         }
         static float temp;
         public void DrawRoad(City start, City target)
@@ -113,16 +115,16 @@ namespace VUPProjekt
             //roads.Add(new Rectangle((int)start.position.X + 50, (int)start.position.Y+20, 10, (int)Vector2.Distance(start.position, target.position)));
             //roads.Add(new Rectangle((int)start.position.X + 50, (int)target.position.Y + 20, 10, ((int)start.position.Y - (int)target.position.Y)));
 
-            roads.Add(new Rectangle((int)start.position.X, (int)start.position.Y, 10, (int)Vector2.Distance(start.position,target.position)));
-            temp = (float)Math.Atan2(start.position.X - target.position.X, target.position.Y - start.position.Y);
+            roads.Add(new Rectangle((int)start.position.X + 40, (int)start.position.Y + 10, 10, (int)Vector2.Distance(start.position, target.position)));
+            angles.Add((float)Math.Atan2(start.position.X - target.position.X, target.position.Y - start.position.Y));
         }
 
-        
+
         public void CreateEdges()
         {
             if (edgeOne != null && edgeTwo != null && edgeThree != null)
             {
-              
+
                 graph.AddEdge(byNavn, edgeOne);
                 graph.AddEdge(byNavn, edgeTwo);
                 graph.AddEdge(byNavn, edgeThree);
@@ -130,37 +132,38 @@ namespace VUPProjekt
             }
             if (edgeOne != null && edgeTwo != null)
             {
-   
+
                 graph.AddEdge(byNavn, edgeOne);
                 graph.AddEdge(byNavn, edgeTwo);
             }
-            else if(edgeOne != null)
+            else if (edgeOne != null)
             {
                 graph.AddEdge(byNavn, edgeOne);
             }
         }
 
+        public static bool hasRunRoad = false;
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(sprite, position, null, Color.White, 0f, Vector2.Zero, 0.1f, SpriteEffects.None, 0f);
-            spriteBatch.DrawString(font, byNavn, new Vector2(position.X + 10, position.Y + 5), Color.Black);
-
-            if (roads != null)
+            if (roads != null && angles != null && hasRunRoad==false)
             {
+                int runs = 0;
                 foreach (var road in roads)
                 {
                     //spriteBatch.Draw(rectangleSprite, road, Color.Red);
-                    spriteBatch.Draw(rectangleSprite, new Vector2(road.X, road.Y), road, Color.Red, temp, Vector2.Zero, 1f, SpriteEffects.None, 0);
+                    spriteBatch.Draw(rectangleSprite, new Vector2(road.X, road.Y), road, Color.Red, angles[runs], Vector2.Zero, 1f, SpriteEffects.None, 0);
+                    runs++;
                 }
-                
+                hasRunRoad=true;
             }
-           
+            spriteBatch.Draw(sprite, position, null, Color.White, 0f, Vector2.Zero, 0.1f, SpriteEffects.None, 0);
+            spriteBatch.DrawString(font, byNavn, new Vector2(position.X + 10, position.Y + 5), Color.Black);
         }
 
         public override void Update(GameTime gameTime)
         {
 
-          
+
 
 
         }
