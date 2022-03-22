@@ -13,8 +13,9 @@ namespace VUPProjekt
         protected string edgeOne;
         protected string edgeTwo;
         protected string edgeThree;
+        protected string edgeFour;
 
-        private static List<float> angles = new List<float>();
+
 
         public static bool hasRun = false;
         public Node<string> cityNode;
@@ -25,6 +26,9 @@ namespace VUPProjekt
         public static Graph<string> graph = new Graph<string>();
 
         public static List<Rectangle> roads = new List<Rectangle>();
+        public static List<Rectangle> constantRoads = new List<Rectangle>();
+        private static List<float> angles = new List<float>();
+        private static List<float> constantAngles = new List<float>();
 
         #region OVERLOADS
         public City(Vector2 _pos, string _byNavn) : base(_pos, "byskilt")
@@ -67,6 +71,17 @@ namespace VUPProjekt
             graph.AddNode(byNavn);
 
         }
+        public City(Vector2 _pos, string _byNavn, string _edgeOne, string _edgeTwo, string _edgeThree, string _edgeFour) : base(_pos, "byskilt")
+        {
+            byNavn = _byNavn;
+            edgeOne = _edgeOne;
+            edgeTwo = _edgeTwo;
+            edgeThree = _edgeThree;
+            edgeFour = _edgeFour;
+            cityNode = new Node<string>(byNavn);
+            graph.AddNode(byNavn);
+
+        }
 
         #endregion
 
@@ -74,7 +89,7 @@ namespace VUPProjekt
         {
             if (!hasRun)
             {
-                Node<string> n = DFS<string>(graph.NodeSet.Find(x => x.Data == "Skagen"), graph.NodeSet.Find(x => x.Data == "Koebenhavn"));
+                Node<string> n = DFS<string>(graph.NodeSet.Find(x => x.Data == "Skagen"), graph.NodeSet.Find(x => x.Data == "Esbjerg"));
                 // Node<string> n = BFS<string>(graph.NodeSet.Find(x => x.Data == "Skagen"), graph.NodeSet.Find(x => x.Data == "Esbjerg"));
 
                 List<Node<string>> path = TrackPath<string>(n, graph.NodeSet.Find(x => x.Data == "Skagen"));
@@ -117,25 +132,74 @@ namespace VUPProjekt
             roads.Add(new Rectangle((int)start.position.X + 40, (int)start.position.Y + 10, 10, (int)Vector2.Distance(start.position, target.position)));
             angles.Add((float)Math.Atan2(start.position.X - target.position.X, target.position.Y - start.position.Y));
         }
+        public static void BruteForceConstantRoads()
+        {
+            foreach (var start in GameWorld.cities)
+            {
+                if (start.edgeOne != null)
+                {
+                    foreach (var edge in GameWorld.cities)
+                    {
+                        if (edge.byNavn == start.edgeOne)
+                        {
+                            CreateConstantRoads(start, edge);
+                        }
+                    }
+                }
+                if (start.edgeTwo != null)
+                {
+                    foreach (var edge in GameWorld.cities)
+                    {
+                        if (edge.byNavn == start.edgeTwo)
+                        {
+                            CreateConstantRoads(start, edge);
+                        }
+                    }
+                }
+                if (start.edgeThree != null)
+                {
+                    foreach (var edge in GameWorld.cities)
+                    {
+                        if (edge.byNavn == start.edgeThree)
+                        {
+                            CreateConstantRoads(start, edge);
+                        }
+                    }
+                }
+                if (start.edgeFour != null)
+                {
+                    foreach (var edge in GameWorld.cities)
+                    {
+                        if (edge.byNavn == start.edgeFour)
+                        {
+                            CreateConstantRoads(start, edge);
+                        }
+                    }
+                }
+            }
+        }
+        public static void CreateConstantRoads(City start, City target)
+        {
+            constantRoads.Add(new Rectangle((int)start.position.X + 40, (int)start.position.Y + 10, 10, (int)Vector2.Distance(start.position, target.position)));
+            constantAngles.Add((float)Math.Atan2(start.position.X - target.position.X, target.position.Y - start.position.Y));
+        }
 
 
         public void CreateEdges()
         {
-            if (edgeOne != null && edgeTwo != null && edgeThree != null)
+            if (edgeFour != null)
             {
-
-                graph.AddEdge(byNavn, edgeOne);
-                graph.AddEdge(byNavn, edgeTwo);
+                graph.AddEdge(byNavn, edgeFour);
+            }
+            if (edgeThree != null)
+            {
                 graph.AddEdge(byNavn, edgeThree);
-
             }
-            if (edgeOne != null && edgeTwo != null)
+            if (edgeTwo != null)
             {
-
-                graph.AddEdge(byNavn, edgeOne);
                 graph.AddEdge(byNavn, edgeTwo);
             }
-            else if (edgeOne != null)
+            if (edgeOne != null)
             {
                 graph.AddEdge(byNavn, edgeOne);
             }
@@ -144,16 +208,21 @@ namespace VUPProjekt
         public static bool hasRunRoad = false;
         public override void Draw(SpriteBatch spriteBatch)
         {
-            if (roads != null && angles != null && hasRunRoad==false)
+            if (roads != null && angles != null && hasRunRoad == false)
             {
                 int runs = 0;
-                foreach (var road in roads)
+                foreach (var road in constantRoads) // Print background roads
                 {
-                    //spriteBatch.Draw(rectangleSprite, road, Color.Red);
+                    spriteBatch.Draw(rectangleSprite, new Vector2(road.X, road.Y), road, Color.Black, constantAngles[runs], Vector2.Zero, 1f, SpriteEffects.None, 0);
+                    runs++;
+                }
+                runs = 0;
+                foreach (var road in roads) // Print chosen path
+                {
                     spriteBatch.Draw(rectangleSprite, new Vector2(road.X, road.Y), road, Color.Red, angles[runs], Vector2.Zero, 1f, SpriteEffects.None, 0);
                     runs++;
                 }
-                hasRunRoad=true;
+                hasRunRoad = true;
             }
             spriteBatch.Draw(sprite, position, null, Color.White, 0f, Vector2.Zero, 0.1f, SpriteEffects.None, 0);
             spriteBatch.DrawString(font, byNavn, new Vector2(position.X + 10, position.Y + 5), Color.Black);
