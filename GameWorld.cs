@@ -41,32 +41,33 @@ namespace VUPProjekt
 
 
 
-            cities.Add(new City(new Vector2(590, 140), "Frederikshavn", "Aalborg"));
+            cities.Add(new City(new Vector2(590, 140), "Frederikshavn", "Aalborg", "Skagen"));
             cities.Add(new City(new Vector2(600, 40), "Skagen", "Frederikshavn"));
-            cities.Add(new City(new Vector2(470, 275), "Aalborg", "Thisted", "Randers"));
-            cities.Add(new City(new Vector2(235, 300), "Thisted", "Holsterbro"));
-            cities.Add(new City(new Vector2(225, 525), "Holsterbro", "Viborg"));
-            cities.Add(new City(new Vector2(375, 500), "Viborg", "Randers", "Herning"));
-            cities.Add(new City(new Vector2(500, 500), "Randers", "Grenaa", "Aarhus", "Viborg"));
-            cities.Add(new City(new Vector2(660, 520), "Grenaa", "Aarhus"));
-            cities.Add(new City(new Vector2(300, 600), "Herning", "Oelgod"));
-            cities.Add(new City(new Vector2(500, 600), "Aarhus", "Vejle"));
-            cities.Add(new City(new Vector2(210, 750), "Oelgod", "Esbjerg"));
-            cities.Add(new City(new Vector2(400, 775), "Vejle", "Kolding"));
-            cities.Add(new City(new Vector2(175, 840), "Esbjerg", "Kolding"));
+            cities.Add(new City(new Vector2(470, 275), "Aalborg", "Thisted", "Randers", "Frederikshavn"));
+            cities.Add(new City(new Vector2(235, 300), "Thisted", "Holsterbro", "Aalborg"));
+            cities.Add(new City(new Vector2(225, 525), "Holsterbro", "Viborg", "Thisted"));
+            cities.Add(new City(new Vector2(375, 500), "Viborg", "Randers", "Herning", "Holsterbro"));
+            cities.Add(new City(new Vector2(500, 500), "Randers", "Grenaa", "Aarhus", "Viborg", "Aalborg")); //QUAD
+            cities.Add(new City(new Vector2(660, 520), "Grenaa", "Aarhus", "Randers"));
+            cities.Add(new City(new Vector2(300, 600), "Herning", "Oelgod","Viborg"));
+            cities.Add(new City(new Vector2(500, 600), "Aarhus", "Vejle","Randers","Grenaa"));
+            cities.Add(new City(new Vector2(210, 750), "Oelgod", "Esbjerg","Herning"));
+            cities.Add(new City(new Vector2(400, 775), "Vejle", "Kolding","Aarhus"));
+            cities.Add(new City(new Vector2(175, 840), "Esbjerg", "Kolding","Oelgod"));
             cities.Add(new City(new Vector2(390, 830), "Kolding", "Esbjerg", "Vejle", "Odense"));
-            cities.Add(new City(new Vector2(575, 875), "Odense", "Slagelse"));
-            cities.Add(new City(new Vector2(1000, 775), "Koebenhavn"));
+            cities.Add(new City(new Vector2(575, 875), "Odense", "Slagelse","Kolding"));
+            cities.Add(new City(new Vector2(1000, 775), "Koebenhavn","Holbaek"));
             cities.Add(new City(new Vector2(775, 875), "Slagelse", "Odense", "Haslev", "Holbaek"));
-            cities.Add(new City(new Vector2(850, 775), "Holbaek", "Koebenhavn", "Kalundborg"));
-            cities.Add(new City(new Vector2(675, 770), "Kalundborg"));
-            cities.Add(new City(new Vector2(900, 900), "Haslev"));
+            cities.Add(new City(new Vector2(850, 775), "Holbaek", "Koebenhavn", "Kalundborg","Slagelse"));
+            cities.Add(new City(new Vector2(675, 770), "Kalundborg","Holbaek"));
+            cities.Add(new City(new Vector2(900, 900), "Haslev","Slagelse"));
 
 
             foreach (City item in cities)
             {
                 item.CreateEdges();
             }
+            City.BruteForceConstantRoads();
 
             foreach (City c in cities)
             {
