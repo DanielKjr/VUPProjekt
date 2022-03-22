@@ -11,7 +11,7 @@ namespace VUPProjekt
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private Texture2D danishMap;
-        
+
 
         public static List<City> cities = new List<City>();
 
@@ -21,6 +21,17 @@ namespace VUPProjekt
         private List<Edge<string>> edging = new List<Edge<string>>();
         private Dictionary<Edge<string>, Road> roads = new Dictionary<Edge<string>, Road>();
         private Graph<string> graph = new Graph<string>();
+
+        private City thisCity;
+        KeyboardState kState = Keyboard.GetState();
+        KeyboardState oldKState = Keyboard.GetState();
+        public static float roadTimer = 2f;
+        public static bool nextRoad;
+        public static int totalCities = 0;
+        public static int currentCity = 1;
+        public static int nextCity = 0;
+
+
 
 
         public GameWorld()
@@ -73,9 +84,9 @@ namespace VUPProjekt
                 //static bool gør den kun køres 1 gang, skal have den heg for at kunne tilgå en instans af city og bruge method
                 c.FindRoad();
             }
-            
 
-           
+
+
 
 
 
@@ -105,8 +116,57 @@ namespace VUPProjekt
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-
+            KeyboardState kState = Keyboard.GetState();
+            
             base.Update(gameTime);
+
+            roadTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+            
+            if (roadTimer <= 0)
+            {
+                nextRoad = true;
+                roadTimer = 2;
+                if (totalCities < City.drawCity.Count - 1 && GameWorld.nextRoad == true)
+                {
+
+
+                    thisCity = (City.drawCity[currentCity]);
+
+                    if (thisCity != null)
+                    {
+                        thisCity.DrawRoad(City.drawCity[currentCity], City.drawCity[nextCity]);
+                        thisCity = City.drawCity[nextCity];
+                        currentCity++;
+                        nextCity++;
+                        totalCities++;
+                    }                   
+                }
+            }
+            if (kState.IsKeyDown(Keys.Right) && thisCity != null && totalCities < City.drawCity.Count - 1 && oldKState.IsKeyUp(Keys.Right))
+            {
+                thisCity.DrawRoad(City.drawCity[currentCity], City.drawCity[nextCity]);
+                thisCity = City.drawCity[nextCity];
+                currentCity++;
+                nextCity++;
+                totalCities++;
+                
+            }
+            if (kState.IsKeyDown(Keys.Left) && thisCity != null && currentCity - 1 >= 1 && oldKState.IsKeyUp(Keys.Left))
+            {
+                City.roads.Reverse();
+                City.roads.RemoveAt(0);
+                City.roads.Reverse();
+                thisCity = City.drawCity[currentCity-1];
+                currentCity--;
+                nextCity--;
+                totalCities--;
+
+            }
+
+            oldKState = kState;
+
+
+
         }
 
         protected override void Draw(GameTime gameTime)

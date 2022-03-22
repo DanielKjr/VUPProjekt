@@ -26,6 +26,7 @@ namespace VUPProjekt
 
         public static List<Rectangle> roads = new List<Rectangle>();
 
+
         #region OVERLOADS
         public City(Vector2 _pos, string _byNavn) : base(_pos, "byskilt")
         {
@@ -87,23 +88,24 @@ namespace VUPProjekt
 
                 }
 
-                for (int i = 0; i < drawCity.Count; i++)
-                {
+                //for (int i = 0; i < drawCity.Count; i++)
+                //{
+                    
+                //    /*for (int b = 0; b < drawCity.Count; b++)
+                //    {
+                //        if (i <= drawCity.Count - 1 && b <= drawCity.Count - 1)
+                //        {
+                //            DrawRoad(drawCity[b], drawCity[i]);
+                //        }
 
-                    /*for (int b = 0; b < drawCity.Count; b++)
-                    {
-                        if (i <= drawCity.Count - 1 && b <= drawCity.Count - 1)
-                        {
-                            DrawRoad(drawCity[b], drawCity[i]);
-                        }
+                //    }*/
+                //    //if (i < drawCity.Count - 1 && GameWorld.nextRoad == false)
+                //    //{
+                //    //    DrawRoad(drawCity[i], drawCity[i + 1]);
+                //    //    //GameWorld.roadTimer = 3;
+                //    //}
 
-                    }*/
-                    if (i < drawCity.Count - 1)
-                    {
-                        DrawRoad(drawCity[i], drawCity[i + 1]);
-                    }
-
-                }
+                //}
 
                 hasRun = true;
             }
@@ -117,6 +119,7 @@ namespace VUPProjekt
             roads.Add(new Rectangle((int)start.position.X + 40, (int)start.position.Y + 10, 10, (int)Vector2.Distance(start.position, target.position)));
             angles.Add((float)Math.Atan2(start.position.X - target.position.X, target.position.Y - start.position.Y));
         }
+
 
 
         public void CreateEdges()
