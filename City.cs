@@ -90,16 +90,16 @@ namespace VUPProjekt
             if (!hasRun)
             {
 
-                string startPoint = "Koebenhavn";
-                string endPoint = "Esbjerg";
+                string startPoint = "Grenaa";
+                string endPoint = "Oelgod";
 
 
 
 
-                Node<string> n = DFS<string>(graph.NodeSet.Find(x => x.Data == startPoint), graph.NodeSet.Find(x => x.Data == endPoint));
+                Node<string> n = DFS<string>(graph.NodeSet.Find(x => x.Data == endPoint), graph.NodeSet.Find(x => x.Data == startPoint)); //Civiliserede folk kører i højre side af vejen!
                 // Node<string> n = BFS<string>(graph.NodeSet.Find(x => x.Data == "Skagen"), graph.NodeSet.Find(x => x.Data == "Esbjerg"));
 
-                List<Node<string>> path = TrackPath<string>(n, graph.NodeSet.Find(x => x.Data == startPoint));
+                List<Node<string>> path = TrackPath<string>(n, graph.NodeSet.Find(x => x.Data == endPoint));
 
                 for (int i = 0; i < path.Count; i++)
                 {
