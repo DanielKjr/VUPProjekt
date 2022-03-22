@@ -152,6 +152,7 @@ namespace VUPProjekt
                         if (edge.byNavn == start.edgeOne)
                         {
                             CreateConstantRoads(start, edge);
+                            break;
                         }
                     }
                 }
@@ -162,6 +163,7 @@ namespace VUPProjekt
                         if (edge.byNavn == start.edgeTwo)
                         {
                             CreateConstantRoads(start, edge);
+                            break;
                         }
                     }
                 }
@@ -172,6 +174,7 @@ namespace VUPProjekt
                         if (edge.byNavn == start.edgeThree)
                         {
                             CreateConstantRoads(start, edge);
+                            break;
                         }
                     }
                 }
@@ -182,6 +185,7 @@ namespace VUPProjekt
                         if (edge.byNavn == start.edgeFour)
                         {
                             CreateConstantRoads(start, edge);
+                            break;
                         }
                     }
                 }
