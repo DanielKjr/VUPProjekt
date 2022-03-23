@@ -26,9 +26,6 @@ namespace VUPProjekt
             spritePath = _spritePath;
         }
 
-
-      
-        
         public Vector2 Position { get => position; set => position = value; }
 
         public event EventHandler ButtonClick;

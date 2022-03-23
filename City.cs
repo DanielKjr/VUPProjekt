@@ -19,6 +19,9 @@ namespace VUPProjekt
 
         public static bool hasRun = false;
         public Node<string> cityNode;
+        public static bool DFSRun = false;
+        public static bool BFSRun = false;
+        public static bool ResetRun = false;
 
 
         public static List<Vector2> drawPath = new List<Vector2>();
@@ -30,7 +33,13 @@ namespace VUPProjekt
         public static List<Rectangle> constantRoads = new List<Rectangle>();
         private static List<float> angles = new List<float>();
         private static List<float> constantAngles = new List<float>();
+        private Node<string> n;
+        public static List<Node<string>> path = new List<Node<string>>();
 
+
+
+        string startPoint = "Grenaa";
+        string endPoint = "Oelgod";
 
         #region OVERLOADS
         public City(Vector2 _pos, string _byNavn) : base(_pos, "byskilt")
@@ -91,25 +100,37 @@ namespace VUPProjekt
         {
             if (!hasRun)
             {
-
-                string startPoint = "Grenaa";
-                string endPoint = "Oelgod";
-
-
-
-
-                Node<string> n = DFS<string>(graph.NodeSet.Find(x => x.Data == endPoint), graph.NodeSet.Find(x => x.Data == startPoint)); //Civiliserede folk kører i højre side af vejen!
-                // Node<string> n = BFS<string>(graph.NodeSet.Find(x => x.Data == "Skagen"), graph.NodeSet.Find(x => x.Data == "Esbjerg"));
-
-                List<Node<string>> path = TrackPath<string>(n, graph.NodeSet.Find(x => x.Data == endPoint));
-
-                for (int i = 0; i < path.Count; i++)
+                if (DFSRun == true)
                 {
+                    n = DFS<string>(graph.NodeSet.Find(x => x.Data == endPoint), graph.NodeSet.Find(x => x.Data == startPoint)); //Civiliserede folk kører i højre side af vejen!
 
-                    drawCity.Add(GameWorld.cities.Find(x => x.cityNode.Data == path[i].Data));
+                    path = TrackPath<string>(n, graph.NodeSet.Find(x => x.Data == endPoint));
+
+                    for (int i = 0; i < path.Count; i++)
+                    {
+
+                        drawCity.Add(GameWorld.cities.Find(x => x.cityNode.Data == path[i].Data));
 
 
+                    }
                 }
+                else if (BFSRun == true)
+                {
+                    n = BFS<string>(graph.NodeSet.Find(x => x.Data == endPoint), graph.NodeSet.Find(x => x.Data == startPoint));
+
+                    path = TrackPath<string>(n, graph.NodeSet.Find(x => x.Data == endPoint));
+                    
+                    for (int i = 0; i < path.Count; i++)
+                    {
+
+                        drawCity.Add(GameWorld.cities.Find(x => x.cityNode.Data == path[i].Data));
+
+
+                    }
+                }
+
+
+                
 
                 //for (int i = 0; i < drawCity.Count; i++)
                 //{
@@ -271,7 +292,14 @@ namespace VUPProjekt
 
         private static Node<T> DFS<T>(Node<T> start, Node<T> goal)
         {
+            
             Stack<Edge<T>> edges = new Stack<Edge<T>>();
+
+            if(ResetRun == true)
+            {
+                edges.Clear();
+                ResetRun = false;
+            }
             edges.Push(new Edge<T>(start, start));
 
             while (edges.Count > 0)
