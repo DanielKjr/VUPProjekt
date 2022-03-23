@@ -189,7 +189,7 @@ namespace VUPProjekt
             {
                 nextRoad = true;
                 roadTimer = 0.15f;
-                if (totalCities < City.drawCity.Count - 1 && GameWorld.nextRoad == true)
+                if (currentCity < City.drawCity.Count - 1 && GameWorld.nextRoad == true)
                 {
 
 
@@ -200,20 +200,20 @@ namespace VUPProjekt
                         thisCity.DrawRoad(City.drawCity[currentCity], City.drawCity[currentCity + 1]);
                         thisCity = City.drawCity[currentCity + 1];
                         currentCity++;
-                        totalCities++;
+                       
                     }                   
                 }
-                if (totalCities >= City.drawCity.Count - 1)
+                if (currentCity >= City.drawCity.Count - 1)
                 {
                     timerActive = false;
                 }
             }
-            if (kState.IsKeyDown(Keys.Right) && thisCity != null && totalCities < City.drawCity.Count - 1 && oldKState.IsKeyUp(Keys.Right) && timerActive == false)
+            if (kState.IsKeyDown(Keys.Right) && thisCity != null && currentCity < City.drawCity.Count - 1 && oldKState.IsKeyUp(Keys.Right) && timerActive == false)
             {
                 thisCity.DrawRoad(City.drawCity[currentCity], City.drawCity[currentCity+1]);
                 thisCity = City.drawCity[currentCity + 1];
                 currentCity++;
-                totalCities++;
+              
                 
             }
             if (kState.IsKeyDown(Keys.Left) && thisCity != null && currentCity - 1 >= 1 && oldKState.IsKeyUp(Keys.Left) && timerActive == false)
@@ -223,7 +223,7 @@ namespace VUPProjekt
                 City.roads.Reverse();
                 thisCity = City.drawCity[currentCity-1];
                 currentCity--;
-                totalCities--;
+               
 
             }
 
