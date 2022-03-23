@@ -33,7 +33,6 @@ namespace VUPProjekt
         public static bool nextRoad;
         public static int totalCities = 0;
         public static int currentCity = 1;
-        public static int nextCity = 0;
 
 
 
@@ -155,10 +154,9 @@ namespace VUPProjekt
 
                     if (thisCity != null)
                     {
-                        thisCity.DrawRoad(City.drawCity[currentCity], City.drawCity[nextCity]);
-                        thisCity = City.drawCity[nextCity];
+                        thisCity.DrawRoad(City.drawCity[currentCity], City.drawCity[currentCity + 1]);
+                        thisCity = City.drawCity[currentCity + 1];
                         currentCity++;
-                        nextCity++;
                         totalCities++;
                     }                   
                 }
@@ -169,10 +167,9 @@ namespace VUPProjekt
             }
             if (kState.IsKeyDown(Keys.Right) && thisCity != null && totalCities < City.drawCity.Count - 1 && oldKState.IsKeyUp(Keys.Right) && timerActive == false)
             {
-                thisCity.DrawRoad(City.drawCity[currentCity], City.drawCity[nextCity]);
-                thisCity = City.drawCity[nextCity];
+                thisCity.DrawRoad(City.drawCity[currentCity], City.drawCity[currentCity+1]);
+                thisCity = City.drawCity[currentCity + 1];
                 currentCity++;
-                nextCity++;
                 totalCities++;
                 
             }
@@ -183,7 +180,6 @@ namespace VUPProjekt
                 City.roads.Reverse();
                 thisCity = City.drawCity[currentCity-1];
                 currentCity--;
-                nextCity--;
                 totalCities--;
 
             }
