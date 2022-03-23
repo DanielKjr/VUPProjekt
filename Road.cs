@@ -18,6 +18,7 @@ namespace VUPProjekt
         public Vector2 Position { get => position; set => position = value; }
 
 
+
         public Road(Vector2 _pos) : base(_pos, "RectangleTexture")
         {
             //something with a rectangle
