@@ -33,6 +33,9 @@ namespace VUPProjekt
         public static bool nextRoad;
         public static int totalCities = 0;
         public static int currentCity = 1;
+        public static int nextCity = 0;
+        public SpriteFont font;
+
 
 
 
@@ -83,11 +86,7 @@ namespace VUPProjekt
             }
             City.BruteForceConstantRoads();
 
-            foreach (City c in cities)
-            {
-                //static bool gør den kun køres 1 gang, skal have den heg for at kunne tilgå en instans af city og bruge method
-                c.FindRoad();
-            }
+            
 
 
 
@@ -106,13 +105,30 @@ namespace VUPProjekt
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             danishMap = Content.Load<Texture2D>("Danmarks Kort");
+            font = Content.Load<SpriteFont>("FontPls");
 
-            var DFSbutton = new Button(Content.Load<Texture2D>("byskilt"))
+            //opretter DFS knap
+            var DFSbutton = new Button(Content.Load<Texture2D>("DFS"))
             {
-                Position = new Vector2(100, 100)
+                Position = new Vector2(950, 280)
             };
             gameButtons.Add(DFSbutton);
             DFSbutton.DFSClick += DFSButtonClick;
+
+            //opretter BFS knap
+            var BFSbutton = new Button(Content.Load<Texture2D>("bfs"))
+            {
+                Position = new Vector2(950, 330)
+            };
+            gameButtons.Add(BFSbutton);
+            BFSbutton.BFSClick += BFSButtonClick;
+
+            var Resetbutton = new Button(Content.Load<Texture2D>("Reset"))
+            {
+                Position = new Vector2(950, 380)
+            };
+            gameButtons.Add(Resetbutton);
+            Resetbutton.ResetClick += ResetButtonClick;
 
             foreach (City c in cities)
             {
@@ -123,10 +139,37 @@ namespace VUPProjekt
         }
         private void DFSButtonClick(object sender, EventArgs e)
         {
+            City.DFSRun = true;
+            City.BFSRun = false;
             foreach (City c in cities)
             {
-                //if distance between mouse and city is < the current lowest distance.  taget city = current city
+                //static bool gør den kun køres 1 gang, skal have den heg for at kunne tilgå en instans af city og bruge method
+                c.FindRoad();
             }
+        }
+        private void BFSButtonClick(object sender, EventArgs e)
+        {
+            City.BFSRun = true;
+            City.DFSRun = false;
+            foreach (City c in cities)
+            {
+                //static bool gør den kun køres 1 gang, skal have den heg for at kunne tilgå en instans af city og bruge method
+                c.FindRoad();
+            }
+        }
+
+        public void ResetButtonClick(object sender, EventArgs e)
+        {
+            
+
+            City.ResetRun = true;
+
+            City.hasRun = false;
+            City.path.Clear();
+            City.roads.Clear();
+            City.BFSRun = false;
+            City.DFSRun = false;
+            City.hasRun = false;
         }
 
         protected override void Update(GameTime gameTime)
@@ -142,7 +185,7 @@ namespace VUPProjekt
             }
             
             
-            if (roadTimer <= 0)
+            if (roadTimer <= 0 && City.DFSRun==true || City.BFSRun==true && roadTimer <= 0)
             {
                 nextRoad = true;
                 roadTimer = 0.15f;
@@ -202,6 +245,9 @@ namespace VUPProjekt
 
 
             _spriteBatch.Draw(danishMap, new Vector2(0, 0), null, Color.White, 0f, Vector2.Zero, 0.5f, SpriteEffects.None, 0);
+
+            _spriteBatch.DrawString(font, "Choose which algorithm to use", new Vector2(910, 255), Color.Black);
+            _spriteBatch.DrawString(font, "Use left and right arrow to see each step", new Vector2(880, 430), Color.Black);
 
             foreach (City c in cities)
             {
