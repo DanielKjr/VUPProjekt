@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,9 +14,11 @@ namespace VUPProjekt
         private Texture2D danishMap;
 
 
+
+
         public static List<City> cities = new List<City>();
 
-
+        private List<Component> gameButtons = new List<Component>();
 
         //bruges ikke men keep just in case cus we're hoarders
         private List<Edge<string>> edging = new List<Edge<string>>();
@@ -104,6 +107,12 @@ namespace VUPProjekt
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             danishMap = Content.Load<Texture2D>("Danmarks Kort");
 
+            var DFSbutton = new Button(Content.Load<Texture2D>("byskilt"))
+            {
+                Position = new Vector2(100, 100)
+            };
+            gameButtons.Add(DFSbutton);
+            DFSbutton.DFSClick += DFSButtonClick;
 
             foreach (City c in cities)
             {
@@ -111,6 +120,13 @@ namespace VUPProjekt
             }
 
 
+        }
+        private void DFSButtonClick(object sender, EventArgs e)
+        {
+            foreach (City c in cities)
+            {
+                //if distance between mouse and city is < the current lowest distance.  taget city = current city
+            }
         }
 
         protected override void Update(GameTime gameTime)
@@ -167,6 +183,10 @@ namespace VUPProjekt
             oldKState = kState;
 
 
+            foreach (Component b in gameButtons)
+            {
+                b.Update(gameTime);
+            }
 
         }
 
@@ -185,7 +205,15 @@ namespace VUPProjekt
 
 
             }
+
+
+            foreach (var component in gameButtons)
+            {
+                component.Draw(gameTime, _spriteBatch);
+            }
+
             City.hasRunRoad = false;
+
 
             _spriteBatch.End();
 

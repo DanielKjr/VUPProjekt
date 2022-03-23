@@ -20,6 +20,7 @@ namespace VUPProjekt
         public static bool hasRun = false;
         public Node<string> cityNode;
 
+
         public static List<Vector2> drawPath = new List<Vector2>();
         public static List<City> drawCity = new List<City>();
 
