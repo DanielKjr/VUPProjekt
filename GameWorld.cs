@@ -31,8 +31,7 @@ namespace VUPProjekt
         public bool timerActive = true;
         public static float roadTimer = 0.15f;
         public static bool nextRoad;
-        public static int totalCities = 0;
-        public static int currentCity = 1;
+        public static int currentCity = 0;
         public static int nextCity = 0;
         public SpriteFont font;
 
