@@ -28,7 +28,8 @@ namespace VUPProjekt
         private City thisCity;
         KeyboardState kState = Keyboard.GetState();
         KeyboardState oldKState = Keyboard.GetState();
-        public static float roadTimer = 2f;
+        public bool timerActive = true;
+        public static float roadTimer = 0.15f;
         public static bool nextRoad;
         public static int totalCities = 0;
         public static int currentCity = 1;
@@ -136,13 +137,16 @@ namespace VUPProjekt
             KeyboardState kState = Keyboard.GetState();
             
             base.Update(gameTime);
-
-            roadTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (timerActive == true)
+            {
+                roadTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+            }
+            
             
             if (roadTimer <= 0)
             {
                 nextRoad = true;
-                roadTimer = 2;
+                roadTimer = 0.15f;
                 if (totalCities < City.drawCity.Count - 1 && GameWorld.nextRoad == true)
                 {
 
@@ -158,8 +162,12 @@ namespace VUPProjekt
                         totalCities++;
                     }                   
                 }
+                if (totalCities >= City.drawCity.Count - 1)
+                {
+                    timerActive = false;
+                }
             }
-            if (kState.IsKeyDown(Keys.Right) && thisCity != null && totalCities < City.drawCity.Count - 1 && oldKState.IsKeyUp(Keys.Right))
+            if (kState.IsKeyDown(Keys.Right) && thisCity != null && totalCities < City.drawCity.Count - 1 && oldKState.IsKeyUp(Keys.Right) && timerActive == false)
             {
                 thisCity.DrawRoad(City.drawCity[currentCity], City.drawCity[nextCity]);
                 thisCity = City.drawCity[nextCity];
@@ -168,7 +176,7 @@ namespace VUPProjekt
                 totalCities++;
                 
             }
-            if (kState.IsKeyDown(Keys.Left) && thisCity != null && currentCity - 1 >= 1 && oldKState.IsKeyUp(Keys.Left))
+            if (kState.IsKeyDown(Keys.Left) && thisCity != null && currentCity - 1 >= 1 && oldKState.IsKeyUp(Keys.Left) && timerActive == false)
             {
                 City.roads.Reverse();
                 City.roads.RemoveAt(0);
