@@ -37,7 +37,9 @@ namespace VUPProjekt
         public static List<Node<string>> path = new List<Node<string>>();
 
 
+        private Color cColor = Color.White;
 
+        public Color CColer { get { return cColor; } set { cColor = value; } }
         string startPoint = "Grenaa";
         string endPoint = "Oelgod";
 
@@ -96,15 +98,15 @@ namespace VUPProjekt
 
         #endregion
 
-        public void FindRoad()
+        public void FindRoad(string start, string end)
         {
             if (!hasRun)
             {
                 if (DFSRun == true)
                 {
-                    n = DFS<string>(graph.NodeSet.Find(x => x.Data == endPoint), graph.NodeSet.Find(x => x.Data == startPoint)); //Civiliserede folk kører i højre side af vejen!
+                    n = DFS<string>(graph.NodeSet.Find(x => x.Data == end), graph.NodeSet.Find(x => x.Data == start)); //Civiliserede folk kører i højre side af vejen!
 
-                    path = TrackPath<string>(n, graph.NodeSet.Find(x => x.Data == endPoint));
+                    path = TrackPath<string>(n, graph.NodeSet.Find(x => x.Data == end));
 
                     for (int i = 0; i < path.Count; i++)
                     {
@@ -116,9 +118,9 @@ namespace VUPProjekt
                 }
                 else if (BFSRun == true)
                 {
-                    n = BFS<string>(graph.NodeSet.Find(x => x.Data == endPoint), graph.NodeSet.Find(x => x.Data == startPoint));
+                    n = BFS<string>(graph.NodeSet.Find(x => x.Data == end), graph.NodeSet.Find(x => x.Data == start));
 
-                    path = TrackPath<string>(n, graph.NodeSet.Find(x => x.Data == endPoint));
+                    path = TrackPath<string>(n, graph.NodeSet.Find(x => x.Data == end));
                     
                     for (int i = 0; i < path.Count; i++)
                     {
@@ -128,28 +130,6 @@ namespace VUPProjekt
 
                     }
                 }
-
-
-                
-
-                //for (int i = 0; i < drawCity.Count; i++)
-                //{
-                    
-                //    /*for (int b = 0; b < drawCity.Count; b++)
-                //    {
-                //        if (i <= drawCity.Count - 1 && b <= drawCity.Count - 1)
-                //        {
-                //            DrawRoad(drawCity[b], drawCity[i]);
-                //        }
-
-                //    }*/
-                //    //if (i < drawCity.Count - 1 && GameWorld.nextRoad == false)
-                //    //{
-                //    //    DrawRoad(drawCity[i], drawCity[i + 1]);
-                //    //    //GameWorld.roadTimer = 3;
-                //    //}
-
-                //}
 
                 hasRun = true;
             }
@@ -260,7 +240,7 @@ namespace VUPProjekt
                 }
                 hasRunRoad = true;
             }
-            spriteBatch.Draw(sprite, position, null, Color.White, 0f, Vector2.Zero, 0.1f, SpriteEffects.None, 0);
+            spriteBatch.Draw(sprite, position, null, CColer, 0f, Vector2.Zero, 0.1f, SpriteEffects.None, 0);
             spriteBatch.DrawString(font, byNavn, new Vector2(position.X + 10, position.Y + 5), Color.Black);
         }
 
