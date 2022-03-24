@@ -18,7 +18,7 @@ namespace VUPProjekt
         private bool isHovering;
         private float spriteScale = 1;
 
-        public event EventHandler ResetClick;
+
         public event EventHandler DFSClick;
         public event EventHandler BFSClick;
 
