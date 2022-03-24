@@ -56,18 +56,18 @@ namespace VUPProjekt
             cities.Add(new City(new Vector2(225, 525), "Holsterbro", "Viborg", "Thisted"));
             cities.Add(new City(new Vector2(375, 500), "Viborg", "Randers", "Herning", "Holsterbro"));
             cities.Add(new City(new Vector2(500, 500), "Randers", "Grenaa", "Aarhus", "Viborg", "Aalborg")); //QUAD
-            cities.Add(new City(new Vector2(660, 520), "Grenaa", "Aarhus", "Randers"));
-            cities.Add(new City(new Vector2(300, 600), "Herning", "Oelgod","Viborg"));
+            cities.Add(new City(new Vector2(660, 520), "Grenaa", "Aarhus", "Randers", "Kalundborg"));
+            cities.Add(new City(new Vector2(300, 600), "Herning", "Oelgod","Viborg", "Vejle"));
             cities.Add(new City(new Vector2(500, 600), "Aarhus", "Vejle","Randers","Grenaa"));
             cities.Add(new City(new Vector2(210, 750), "Oelgod", "Esbjerg","Herning"));
-            cities.Add(new City(new Vector2(400, 775), "Vejle", "Kolding","Aarhus"));
+            cities.Add(new City(new Vector2(400, 775), "Vejle", "Kolding","Aarhus", "Herning"));
             cities.Add(new City(new Vector2(175, 840), "Esbjerg", "Kolding","Oelgod"));
             cities.Add(new City(new Vector2(390, 830), "Kolding", "Esbjerg", "Vejle", "Odense"));
             cities.Add(new City(new Vector2(575, 875), "Odense", "Slagelse","Kolding"));
             cities.Add(new City(new Vector2(1000, 775), "Koebenhavn","Holbaek"));
             cities.Add(new City(new Vector2(775, 875), "Slagelse", "Odense", "Haslev", "Holbaek"));
             cities.Add(new City(new Vector2(850, 775), "Holbaek", "Koebenhavn", "Kalundborg","Slagelse"));
-            cities.Add(new City(new Vector2(675, 770), "Kalundborg","Holbaek"));
+            cities.Add(new City(new Vector2(675, 770), "Kalundborg","Holbaek", "Grenaa"));
             cities.Add(new City(new Vector2(900, 900), "Haslev","Slagelse"));
 
 
@@ -250,7 +250,7 @@ namespace VUPProjekt
             _spriteBatch.Draw(danishMap, new Vector2(0, 0), null, Color.White, 0f, Vector2.Zero, 0.5f, SpriteEffects.None, 0);
 
             _spriteBatch.DrawString(font, "Choose which algorithm to use", new Vector2(910, 255), Color.Black);
-            _spriteBatch.DrawString(font, "Use left and right arrow to see each step", new Vector2(880, 430), Color.Black);
+            _spriteBatch.DrawString(font, "Use left and right arrow to see each step\nUse left and right mouse click to change start/goal", new Vector2(880, 380), Color.Black);
 
             foreach (City c in cities)
             {
