@@ -12,29 +12,22 @@ namespace VUPProjekt
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private Texture2D danishMap;
-
+        public SpriteFont font;
+        KeyboardState oldKState = Keyboard.GetState();
         private MouseState _currentMouse;
         private MouseState _previousMouse;
 
 
         public static List<City> cities = new List<City>();
-
         private List<Component> gameButtons = new List<Component>();
-
-        //bruges ikke men keep just in case cus we're hoarders
-        private List<Edge<string>> edging = new List<Edge<string>>();
-        private Dictionary<Edge<string>, Road> roads = new Dictionary<Edge<string>, Road>();
-        private Graph<string> graph = new Graph<string>();
-
         private City thisCity;
-        KeyboardState kState = Keyboard.GetState();
-        KeyboardState oldKState = Keyboard.GetState();
+         
         public bool timerActive = true;
         public static float roadTimer = 0.15f;
         public static bool nextRoad;
         public static int currentCity = 0;
         public static int nextCity = 0;
-        public SpriteFont font;
+      
 
         private string startCity, endCity;
 
@@ -55,9 +48,6 @@ namespace VUPProjekt
             _graphics.ApplyChanges();
             startCity = "Skagen";
             endCity = "Odense";
-
-
-
 
             cities.Add(new City(new Vector2(590, 140), "Frederikshavn", "Aalborg", "Skagen"));
             cities.Add(new City(new Vector2(600, 40), "Skagen", "Frederikshavn"));
@@ -115,12 +105,6 @@ namespace VUPProjekt
             gameButtons.Add(BFSbutton);
             BFSbutton.BFSClick += BFSButtonClick;
 
-            var Resetbutton = new Button(Content.Load<Texture2D>("Reset"))
-            {
-                Position = new Vector2(950, 380)
-            };
-            gameButtons.Add(Resetbutton);
-            Resetbutton.ResetClick += ResetButtonClick;
 
             foreach (City c in cities)
             {
@@ -148,20 +132,6 @@ namespace VUPProjekt
                 //static bool gør den kun køres 1 gang, skal have den heg for at kunne tilgå en instans af city og bruge method
                 c.FindRoad(startCity, endCity);
             }
-        }
-
-        public void ResetButtonClick(object sender, EventArgs e)
-        {
-            
-
-            City.ResetRun = true;
-
-            City.hasRun = false;
-            City.path.Clear();
-            City.roads.Clear();
-            City.BFSRun = false;
-            City.DFSRun = false;
-            City.hasRun = false;
         }
 
         protected override void Update(GameTime gameTime)
@@ -245,17 +215,14 @@ namespace VUPProjekt
             foreach (City c in cities)
             {
                 if (_currentMouse.LeftButton == ButtonState.Released && _previousMouse.LeftButton == ButtonState.Pressed
-                    && Vector2.Distance(new Vector2(c.Position.X, c.Position.Y), new Vector2(_currentMouse.X, _currentMouse.Y)) < 50)
+                    && Vector2.Distance(new Vector2(c.Position.X + 25, c.Position.Y +15), new Vector2(_currentMouse.X, _currentMouse.Y)) < 25)
                 {
                     startCity = c.cityNode.Data;
-
-
                 }
                 if (_currentMouse.RightButton == ButtonState.Released && _previousMouse.RightButton == ButtonState.Pressed
-                   && Vector2.Distance(new Vector2(c.Position.X, c.Position.Y), new Vector2(_currentMouse.X, _currentMouse.Y)) < 50)
+                   && Vector2.Distance(new Vector2(c.Position.X + 25, c.Position.Y + 15), new Vector2(_currentMouse.X, _currentMouse.Y)) < 25)
                 {
                     endCity = c.cityNode.Data;
-
                 }
                 if (c.cityNode.Data == startCity)
                 {
@@ -288,10 +255,7 @@ namespace VUPProjekt
             foreach (City c in cities)
             {
                 c.Draw(_spriteBatch);
-
-
             }
-
 
             foreach (var component in gameButtons)
             {
@@ -306,81 +270,7 @@ namespace VUPProjekt
             base.Draw(gameTime);
         }
 
-        public void CreateNodes()
-        {
-
-            //graph.AddNode("Skagen");
-            //graph.AddNode("Frederikshavn");
-            //graph.AddNode("Aalborg");
-            //graph.AddNode("Thisted");
-            //graph.AddNode("Holsterbro");
-            //graph.AddNode("Viborg");
-            //graph.AddNode("Randers");
-            //graph.AddNode("Grenaa");
-            //graph.AddNode("Herning");
-            //graph.AddNode("Aarhus");
-            //graph.AddNode("Oelgod");
-            //graph.AddNode("Thisted");
-            //graph.AddNode("Vejle");
-            //graph.AddNode("Esbjerg");
-            //graph.AddNode("Kolding");
-            //graph.AddNode("Odense");
-            //graph.AddNode("Koebenhavn");
-            //graph.AddNode("Slagelse");
-            //graph.AddNode("Holbaek");
-            //graph.AddNode("Kalundborg");
-            //graph.AddNode("Haslev");
-
-
-
-
-            graph.AddEdge("Skagen", "Frederikshavn");
-
-            graph.AddEdge("Frederikshavn", "Aalborg");
-
-            graph.AddEdge("Aalborg", "Thisted");
-            graph.AddEdge("Aalborg", "Randers");
-
-            graph.AddEdge("Thisted", "Holsterbro");
-
-            graph.AddEdge("Holsterbro", "Viborg");
-
-            graph.AddEdge("Viborg", "Randers");
-            graph.AddEdge("Viborg", "Herning");
-
-            graph.AddEdge("Randers", "Grenaa");
-            graph.AddEdge("Randers", "Aarhus");
-
-            graph.AddEdge("Herning", "Oelgod");
-
-            graph.AddEdge("Oelgod", "Esbjerg");
-
-            graph.AddEdge("Aarhus", "Vejle");
-
-            graph.AddEdge("Kolding", "Esbjerg");
-            graph.AddEdge("Kolding", "Vejle");
-            graph.AddEdge("Kolding", "Odense");
-
-            graph.AddEdge("Slagelse", "Odense");
-            graph.AddEdge("Slagelse", "Haslev");
-            graph.AddEdge("Slagelse", "Holbaek");
-
-            graph.AddEdge("Holbaek", "Koebenhavn");
-            graph.AddEdge("Holbaek", "Kalundborg");
-
-
-            foreach (Node<string> item in graph.NodeSet)
-            {
-                foreach (Edge<string> e in item.Edges)
-                {
-                    edging.Add(e);
-                    roads.Add(e, new Road(new Vector2(500, 500)));
-                }
-            }
-
-
-
-        }
+      
 
 
 
