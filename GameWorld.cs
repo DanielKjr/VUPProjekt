@@ -12,6 +12,7 @@ namespace VUPProjekt
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private Texture2D danishMap;
+        private Texture2D graphOverview;
         public SpriteFont font;
         KeyboardState oldKState = Keyboard.GetState();
         private MouseState _currentMouse;
@@ -49,8 +50,8 @@ namespace VUPProjekt
             startCity = "Skagen";
             endCity = "Odense";
 
-            cities.Add(new City(new Vector2(590, 140), "Frederikshavn", "Aalborg", "Skagen"));
             cities.Add(new City(new Vector2(600, 40), "Skagen", "Frederikshavn"));
+            cities.Add(new City(new Vector2(590, 140), "Frederikshavn", "Aalborg", "Skagen"));
             cities.Add(new City(new Vector2(470, 275), "Aalborg", "Thisted", "Randers", "Frederikshavn"));
             cities.Add(new City(new Vector2(235, 300), "Thisted", "Holsterbro", "Aalborg"));
             cities.Add(new City(new Vector2(225, 525), "Holsterbro", "Viborg", "Thisted"));
@@ -87,6 +88,7 @@ namespace VUPProjekt
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             danishMap = Content.Load<Texture2D>("Danmarks Kort");
+            graphOverview = Content.Load<Texture2D>("Pyramide");
             font = Content.Load<SpriteFont>("FontPls");
 
             //opretter DFS knap
@@ -242,12 +244,14 @@ namespace VUPProjekt
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.White);
 
             _spriteBatch.Begin();
 
 
             _spriteBatch.Draw(danishMap, new Vector2(0, 0), null, Color.White, 0f, Vector2.Zero, 0.5f, SpriteEffects.None, 0);
+            _spriteBatch.Draw(graphOverview, new Vector2(1080, 50), null, Color.White, 0f, Vector2.Zero, 0.3f, SpriteEffects.None, 0);
+            _spriteBatch.DrawString(font, "Overview of Node graph", new Vector2(1290, 30), Color.Black);
 
             _spriteBatch.DrawString(font, "Choose which algorithm to use", new Vector2(910, 255), Color.Black);
             _spriteBatch.DrawString(font, "Use left and right arrow to see each step\nUse left and right mouse click to change start/goal", new Vector2(880, 380), Color.Black);
