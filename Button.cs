@@ -18,14 +18,12 @@ namespace VUPProjekt
         private bool isHovering;
         private float spriteScale = 1;
 
-        public event EventHandler CityClick;
         public event EventHandler ResetClick;
         public event EventHandler DFSClick;
         public event EventHandler BFSClick;
 
         public bool Clicked { get; private set; }
         public Color PenColor { get; set; }
-        //  private Color color = Color.White;
         public Vector2 Position { get; set; }
 
         public Rectangle Rectangle
@@ -78,7 +76,6 @@ namespace VUPProjekt
 
                         DFSClick?.Invoke(this, new EventArgs());
                         BFSClick?.Invoke(this, new EventArgs());
-                        ResetClick?.Invoke(this, new EventArgs());
 
                 }
             }

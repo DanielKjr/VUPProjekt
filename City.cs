@@ -40,8 +40,7 @@ namespace VUPProjekt
         private Color cColor = Color.White;
 
         public Color CColer { get { return cColor; } set { cColor = value; } }
-        string startPoint = "Grenaa";
-        string endPoint = "Oelgod";
+
 
         #region OVERLOADS
         public City(Vector2 _pos, string _byNavn) : base(_pos, "byskilt")
@@ -59,8 +58,7 @@ namespace VUPProjekt
 
             cityNode = new Node<string>(byNavn);
             graph.AddNode(byNavn);
-
-
+ 
         }
 
         public City(Vector2 _pos, string _byNavn, string _edgeOne, string _edgeTwo) : base(_pos, "byskilt")
@@ -70,7 +68,6 @@ namespace VUPProjekt
             edgeTwo = _edgeTwo;
             cityNode = new Node<string>(byNavn);
             graph.AddNode(byNavn);
-
         }
 
 
@@ -82,7 +79,7 @@ namespace VUPProjekt
             edgeThree = _edgeThree;
             cityNode = new Node<string>(byNavn);
             graph.AddNode(byNavn);
-
+    
         }
         public City(Vector2 _pos, string _byNavn, string _edgeOne, string _edgeTwo, string _edgeThree, string _edgeFour) : base(_pos, "byskilt")
         {
@@ -93,7 +90,7 @@ namespace VUPProjekt
             edgeFour = _edgeFour;
             cityNode = new Node<string>(byNavn);
             graph.AddNode(byNavn);
-
+    
         }
 
         #endregion
@@ -137,8 +134,6 @@ namespace VUPProjekt
         }
         public void DrawRoad(City start, City target)
         {
-            //roads.Add(new Rectangle((int)start.position.X + 50, (int)start.position.Y+20, 10, (int)Vector2.Distance(start.position, target.position)));
-            //roads.Add(new Rectangle((int)start.position.X + 50, (int)target.position.Y + 20, 10, ((int)start.position.Y - (int)target.position.Y)));
 
             roads.Add(new Rectangle((int)start.position.X + 40, (int)start.position.Y + 10, 10, (int)Vector2.Distance(start.position, target.position)));
             angles.Add((float)Math.Atan2(start.position.X - target.position.X, target.position.Y - start.position.Y));
@@ -244,13 +239,6 @@ namespace VUPProjekt
             spriteBatch.DrawString(font, byNavn, new Vector2(position.X + 10, position.Y + 5), Color.Black);
         }
 
-        public override void Update(GameTime gameTime)
-        {
-
-
-
-
-        }
 
         private static List<Node<T>> TrackPath<T>(Node<T> node, Node<T> start)
         {
@@ -274,12 +262,6 @@ namespace VUPProjekt
         {
             
             Stack<Edge<T>> edges = new Stack<Edge<T>>();
-
-            if(ResetRun == true)
-            {
-                edges.Clear();
-                ResetRun = false;
-            }
             edges.Push(new Edge<T>(start, start));
 
             while (edges.Count > 0)
