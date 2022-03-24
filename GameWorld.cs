@@ -13,7 +13,8 @@ namespace VUPProjekt
         private SpriteBatch _spriteBatch;
         private Texture2D danishMap;
 
-
+        private MouseState _currentMouse;
+        private MouseState _previousMouse;
 
 
         public static List<City> cities = new List<City>();
@@ -35,7 +36,7 @@ namespace VUPProjekt
         public static int nextCity = 0;
         public SpriteFont font;
 
-
+        private string startCity, endCity;
 
 
 
@@ -52,7 +53,8 @@ namespace VUPProjekt
             _graphics.PreferredBackBufferWidth = 1600;
             _graphics.PreferredBackBufferHeight = 1050;
             _graphics.ApplyChanges();
-
+            startCity = "Skagen";
+            endCity = "Odense";
 
 
 
@@ -84,15 +86,6 @@ namespace VUPProjekt
                 item.CreateEdges();
             }
             City.BruteForceConstantRoads();
-
-            
-
-
-
-
-
-
-
 
 
             base.Initialize();
@@ -143,7 +136,7 @@ namespace VUPProjekt
             foreach (City c in cities)
             {
                 //static bool gør den kun køres 1 gang, skal have den heg for at kunne tilgå en instans af city og bruge method
-                c.FindRoad();
+                c.FindRoad(startCity, endCity);
             }
         }
         private void BFSButtonClick(object sender, EventArgs e)
@@ -153,7 +146,7 @@ namespace VUPProjekt
             foreach (City c in cities)
             {
                 //static bool gør den kun køres 1 gang, skal have den heg for at kunne tilgå en instans af city og bruge method
-                c.FindRoad();
+                c.FindRoad(startCity, endCity);
             }
         }
 
@@ -176,7 +169,9 @@ namespace VUPProjekt
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             KeyboardState kState = Keyboard.GetState();
-            
+
+            CityUpdate();
+
             base.Update(gameTime);
             if (timerActive == true)
             {
@@ -234,6 +229,48 @@ namespace VUPProjekt
                 b.Update(gameTime);
             }
 
+        }
+
+        /// <summary>
+        /// Sets start/end city as well as changing color while selected.
+        /// </summary>
+        private void CityUpdate()
+        {
+            _previousMouse = _currentMouse;
+            _currentMouse = Mouse.GetState();
+
+            var mouseRectangle = new Rectangle(_currentMouse.X, _currentMouse.Y, 1, 1);
+
+
+            foreach (City c in cities)
+            {
+                if (_currentMouse.LeftButton == ButtonState.Released && _previousMouse.LeftButton == ButtonState.Pressed
+                    && Vector2.Distance(new Vector2(c.Position.X, c.Position.Y), new Vector2(_currentMouse.X, _currentMouse.Y)) < 50)
+                {
+                    startCity = c.cityNode.Data;
+
+
+                }
+                if (_currentMouse.RightButton == ButtonState.Released && _previousMouse.RightButton == ButtonState.Pressed
+                   && Vector2.Distance(new Vector2(c.Position.X, c.Position.Y), new Vector2(_currentMouse.X, _currentMouse.Y)) < 50)
+                {
+                    endCity = c.cityNode.Data;
+
+                }
+                if (c.cityNode.Data == startCity)
+                {
+                    c.CColer = Color.Gray;
+                }
+                else if (c.cityNode.Data == endCity)
+                {
+                    c.CColer = Color.Red;
+                }
+                else
+                {
+                    c.CColer = Color.White;
+                }
+
+            }
         }
 
         protected override void Draw(GameTime gameTime)
